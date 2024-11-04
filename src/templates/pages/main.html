@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- styles -->
+  <link rel="stylesheet" href="../../node_modules/admin-lte/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../../node_modules/admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../styles/main.css">
+  <!-- scripts -->
+  <script src="../../../node_modules/admin-lte/dist/js/adminlte.min.js" defer></script>
+  <script src="../../../node_modules/admin-lte/plugins/jquery/jquery.min.js" defer></script>
+  <script src="../../../node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
+  <script src="../../js/chart.js" defer></script>
+  <script src="../../js/diagramma.js" defer></script>
+   <title>Главная</title>
+</head>
+<body>
+   <section class="diagramma row">
+   
+         <ul class="days-navigation d-flex flex-wrap p-0 ms-4 mt-4 list-unstyled col-12">
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100 active">
+                    Сегодня
+                </a>
+            </li>
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                    Неделя
+                </a>
+            </li>
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                    Месяц
+                </a>
+            </li>
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                    Год
+                </a>
+            </li>
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                    Все
+                </a>
+            </li>
+            <li class="ms-4 mt-2">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                    Интервал
+                </a>
+            </li>
+            <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
+                <span>c</span>
+                <a href="#" class="text-secondary text-decoration-none" id="data-from">
+                    Дата
+                </a>
+            </li>
+            <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
+                <span>по</span>
+                <a href="#" class="text-secondary text-decoration-none" id="data-till">
+                    Дата
+                </a>
+            </li>
+        </ul>
+        <div class="row justify-content-center">
+         <div class="col-md-5" style="width: 400px;">
+             <canvas  id="income-diagramma"></canvas>
+         </div>
+         <div class="col-md-5  " style="width: 400px;">
+             <canvas id="expenses-diagramma"></canvas>
+         </div>
+     </div>
+
+   </section>
+   
+</body>
+</html>

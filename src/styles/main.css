@@ -1,0 +1,80 @@
+
+@font-face {
+   font-family: "Roboto-400";
+   src: url(../fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+
+@font-face {
+   font-family: "Roboto-500";
+   src: url(../fonts/Roboto-Medium.ttf) format('truetype');
+}
+
+body {
+   font-family: 'Roboto-400', sans-serif;
+
+}
+.registration-content {
+  max-width: 400px;
+   display: flex;
+   flex-direction: column;
+    justify-content: center;
+   height: 100vh;
+     position: absolute;
+   left: 50%;
+   top: 50%;
+   -webkit-transform: translate(-50%, -50%);
+   transform: translate(-50%, -50%);
+}
+
+.logo-content {
+   margin-bottom: 60px;
+}
+
+.title-content  {
+   margin-bottom: 20px;
+   color: #052C65;
+ font-size: 40px;
+ font-family: "Roboto-500", sans-serif;
+   
+}
+#content {
+   padding-top: 40px;
+   padding-left: 60px;
+}
+.form-control::placeholder {
+font-size: 15px;
+line-height: 24px;
+color:  #6C757D;
+
+
+}
+
+#remember-me > label {
+ font-size: 12px;
+font-weight: 400;
+line-height: 23px;
+text-align: left;
+color: #000000;
+
+}
+
+.form-check{
+   margin-bottom: 20px;
+}
+
+.create-edit {
+   max-width: 400px;
+}
+
+.budgeting-table {
+   max-width: 1101px;
+}
+
+.days-navigation li {
+   width: 100px;
+}
+
+.btn-container {
+   padding-left: 0;
+}

@@ -1,0 +1,83 @@
+.logo-container {
+margin: 40px 71px 20px 50px;
+}
+
+.wrapper-layout {
+   max-height: 100vh;
+   overflow-x: hidden;
+}
+.main-menu-item {
+font-size: 14px;
+font-weight: 400;
+line-height: 16.41px;
+text-align: left;
+color: #052C65;
+
+
+}
+.nav.nav-pills {
+margin-top: 60px;
+}
+
+
+
+.icon {
+   margin-right: 10px;
+}
+
+.arrow {
+   margin-left: 65px;
+}
+
+
+
+#balance-amount {
+   color: #0D6EFD;
+   
+}
+.balance {
+   font-family: "Roboto-500";
+   font-size: 14px;
+}
+#page-title {
+   font-family: "Roboto-500";  
+   font-size: 40px;
+   color: #052C65;
+
+}
+.header {
+   padding-top: 100px;
+   padding-left: 60px;
+}
+
+
+.avatar {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+background-color: #D9D9D9;
+margin-right: 16px;
+  }
+
+  .accordion-button.collapsed {
+   border: none;
+   background: none;
+  }
+
+  .diagramma {
+   padding-top: 60px;
+   padding-left: 60px;
+}
+.days-navigation > li {
+width: 100px;
+height: 37px;
+}
+
+.card {
+  max-width: 352px;
+height: 121px;
+border: 1px solid #CED4DA;
+border-radius: 12px;
+
+}
+
