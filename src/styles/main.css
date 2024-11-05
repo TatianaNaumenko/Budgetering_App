@@ -12,6 +12,7 @@
 
 body {
    font-family: 'Roboto-400', sans-serif;
+   overflow: hidden;
 
 }
 .registration-content {
@@ -26,7 +27,9 @@ body {
    -webkit-transform: translate(-50%, -50%);
    transform: translate(-50%, -50%);
 }
-
+.main-content-wrapper {
+   overflow-y: scroll;
+}
 .logo-content {
    margin-bottom: 60px;
 }
@@ -78,3 +81,9 @@ color: #000000;
 .btn-container {
    padding-left: 0;
 }
+
+.card {
+   max-width: 352px; 
+    overflow: auto; 
+   
+ }
