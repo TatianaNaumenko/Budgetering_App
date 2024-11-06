@@ -17,56 +17,57 @@
    <title>Главная</title>
 </head>
 <body>
-   <section class="diagramma row">
+   <section class="diagramma">
    
-         <ul class="days-navigation d-flex flex-wrap p-0 ms-4 mt-4 list-unstyled col-12">
-            <li class="ms-4 mt-2">
+         <ul class="days-navigation d-flex flex-wrap p-0  list-unstyled col-12">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100 active">
                     Сегодня
                 </a>
             </li>
-            <li class="ms-4 mt-2">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100">
                     Неделя
                 </a>
             </li>
-            <li class="ms-4 mt-2">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100">
                     Месяц
                 </a>
             </li>
-            <li class="ms-4 mt-2">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100">
                     Год
                 </a>
             </li>
-            <li class="ms-4 mt-2">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100">
                     Все
                 </a>
             </li>
-            <li class="ms-4 mt-2">
+            <li class="">
                 <a href="#" class="select-interval btn btn-outline-secondary w-100">
                     Интервал
                 </a>
             </li>
-            <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
+            <li class=" d-flex align-items-center justify-content-around">
                 <span>c</span>
                 <a href="#" class="text-secondary text-decoration-none" id="data-from">
                     Дата
                 </a>
             </li>
-            <li class="ms-4 mt-2 d-flex align-items-center justify-content-around">
+            <li class=" d-flex align-items-center justify-content-around">
                 <span>по</span>
                 <a href="#" class="text-secondary text-decoration-none" id="data-till">
                     Дата
                 </a>
             </li>
         </ul>
-        <div class="row justify-content-center">
-         <div class="col-md-5" style="width: 400px;">
+        <div class="row main-diagramm">
+         <div class="income-diagramma col-md-5" style="width: 400px;">
              <canvas  id="income-diagramma"></canvas>
          </div>
+       
          <div class="col-md-5  " style="width: 400px;">
              <canvas id="expenses-diagramma"></canvas>
          </div>
