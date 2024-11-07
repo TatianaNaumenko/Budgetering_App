@@ -6,19 +6,25 @@
   <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
    <link rel="stylesheet" href="../../styles/main.css">
    <link rel="stylesheet" href="../../styles/layout.css">
+   <link rel="stylesheet" href="../../styles/adaptive.css">
    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
    <
 </head>
 <body>
-   <div class="expenses">
-   <div class="cards mt-5 ms-5 d-flex gap-4 flex-wrap">
+
+   <div class="expenses container">
+   <div class="cards row ">
+    <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark">
-          Еда
-          <div class="action pt-3">
-              <a href="edit-expenses.html" class="btn btn-primary">Редактировать</a>
+          Еда   Еда   Еда   Еда   Еда   Еда   Еда   Еда   Еда   ЕдаLorem ipsum dolor sit amet consectetur adipisicing elit. Numquam inventore, magni harum alias nisi at neque suscipit vero id eius quos vel voluptatum impedit ut voluptas ipsum, corrupti tenetur expedita?
+          <div class="action  pt-3">
+            
+              <a href="edit-expenses.html" class="btn btn-primary ">Редактировать</a>
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+    </div>
+    <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Жилье
           <div class="action pt-3">
@@ -26,6 +32,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+    </div>
+    <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Здоровье
           <div class="action pt-3">
@@ -33,6 +41,8 @@
               <a class="btn btn-danger delete-card" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Кафе
           <div class="action pt-3">
@@ -40,6 +50,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Авто
           <div class="action pt-3">
@@ -47,6 +59,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Одежда
           <div class="action pt-3">
@@ -54,6 +68,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Развлечения
           <div class="action pt-3">
@@ -61,6 +77,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Счета
           <div class="action pt-3">
@@ -68,6 +86,8 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="card h3 p-3 text-purple-dark" >
           Спорт
           <div class="action pt-3">
@@ -75,12 +95,15 @@
               <a href="#" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить</a>
           </div>
       </div>
+      </div>
+      <div class="col-md-4 mb-4">
       <div class="new-card card h3 p-3 d-flex justify-content-center align-items-center" role="button" >
         <!-- вставила ссылку чтобы по ней переходить на страницу создания категории расходов -->
         <a href="#"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
         </svg></a>
        
+      </div>
       </div>
   </div>
 
