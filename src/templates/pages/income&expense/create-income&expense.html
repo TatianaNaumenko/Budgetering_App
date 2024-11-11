@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- styles -->
+   <link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../../../styles/main.css">
+   <link rel="stylesheet" href="../../../styles/layout.css">
+   <link rel="stylesheet" href="../../../styles/adaptive.css">
+   <!-- scripts -->
+   <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
+   <script src="../../../js/chart.js" defer></script>
+   <script src=../../../js/main.js" defer></script>
+   <title>Создание дохода.расхода</title>
+</head>
+<body>
+   <div class="container">
+      <form >
+         <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="createTypeIncome&Expense" type="text" class="form-control is-invalid "  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Тип...">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+          <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="createCategoryIncome&Expense" type="text" class="form-control "  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Категория...">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+          <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="createSumIncome&Expense" type="text" class="form-control "  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Сумма в $">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+          <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="dataCreateIncome&Expense" type="text" class="form-control "  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Дата...">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+          <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="createComment" type="text" class="form-control "  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Коментарий...">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+             
+         <button type="submit" class="btn btn-success" id="createIncomesCategoryBtn">Создать</button>
+         <button  class="btn btn-danger">Отмена</button>
+       </form>
+   </div>
+</body>
+</html>

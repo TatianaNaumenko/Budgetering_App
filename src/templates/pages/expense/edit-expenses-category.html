@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="../../../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../../../styles/main.css">
+   <link rel="stylesheet" href="../../../styles/layout.css">
+   <link rel="stylesheet" href="../../../styles/adaptive.css">
+   <!-- scripts -->
+   <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.min.js" defer></script>
+   <script src="../../../js/chart.js" defer></script>
+   <script src=../../../js/main.js" defer></script>
+
+   <title>Редактирование категории расходов</title>
+</head>
+<body>
+   <div class="container">
+      <form >
+         <div class="input-group has-validation mb-3 create-edit">
+            
+            <input id="editExpensesCategory" type="text" class="form-control is-invalid"  aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder="Название...">
+            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+              Заполните поле ввода!
+            </div>
+          </div>
+             
+         <button type="submit" class="btn btn-success" id="editExpensesCategoryBtn">Создать</button>
+         <button  class="btn btn-danger">Отмена</button>
+       </form>
+   </div>
+   
+</body>
+</html>
