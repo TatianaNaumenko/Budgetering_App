@@ -37,6 +37,7 @@ module.exports = {
     new CopyPlugin({
       patterns: [
          // Копирование компонентов
+         { from: './src/js', to: 'js' }, 
         { from: './src/templates', to: 'templates' },
         { from: './src/images', to: 'images' },
         { from: './src/fonts', to: 'fonts' },
