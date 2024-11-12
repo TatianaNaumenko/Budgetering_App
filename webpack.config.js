@@ -29,6 +29,7 @@ module.exports = {
       },
     ],
   },
+  
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html', // Путь к вашему основному HTML файлу
@@ -38,7 +39,9 @@ module.exports = {
       patterns: [
          // Копирование компонентов
          { from: './src/js', to: 'js' }, 
-        { from: './src/templates', to: 'templates' },
+         { from: './node_modules/bootstrap/dist/js/bootstrap.min.js', to: 'js' }, 
+         { from: './node_modules/bootstrap/dist/css/bootstrap.min.css', to: 'styles' }, 
+           { from: './src/templates', to: 'templates' },
         { from: './src/images', to: 'images' },
         { from: './src/fonts', to: 'fonts' },
         { from: './src/styles', to: 'styles' },

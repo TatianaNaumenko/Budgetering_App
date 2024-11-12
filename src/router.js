@@ -1,3 +1,4 @@
+import { Form } from "./js/auth/form";
 
 export class Router {
    constructor() {
