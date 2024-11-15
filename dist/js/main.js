@@ -1,60 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
-   const incomeDiagram = document.getElementById('income-diagramma');
-   const expensesDiagram = document.getElementById('expenses-diagramma');
+import { Auth } from "./services/auth";
 
+export class Main{
+constructor(){
+   this.contentLayoutElement = document.getElementById('content-layout');
+   this.userName = document.getElementById('userName');
+   this.logOutElement = document.getElementById('logOut')
+   this.initPage()
+}
+initPage(){
+   let userInfo = Auth.getUserInfo();
+   console.log(userInfo)
+   this.userName.style.fontSize = '12px';
+   this.userName.innerText = userInfo.name + ' ' + userInfo.lastName;
+   this.logOutElement.addEventListener('click', (e)=>{
+e.preventDefault();
+Auth.logout();
+   })
+}
 
-   let incomeData = [100, 119, 103, 58, 20, 3];
-   let expensesData = [5, 30, 8, 45, 12, 7];
-
-   new Chart(incomeDiagram, {
-       type: 'pie',
-       responsive: true,
-       maintainAspectRatio: false,
-       data: {
-           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-           datasets: [{
-               label: 'Income Data',
-               data: incomeData,
-               borderWidth: 1
-           }]
-       },
-       options: {
-           plugins: {
-               title: {
-                   display: true,
-                   text: 'Доходы',
-                   color: '#290661',
-                   font: {
-                       size: 28
-                   }
-               }
-           }
-       }
-   });
-
-   new Chart(expensesDiagram, {
-       type: 'pie',
-       responsive: true,
-       maintainAspectRatio: false,
-       data: {
-           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-           datasets: [{
-               label: 'Expenses Data',
-               data: expensesData,
-               borderWidth: 1
-           }]
-       },
-       options: {
-           plugins: {
-               title: {
-                   display: true,
-                   text: 'Расходы',
-                   color: '#290661',
-                   font: {
-                       size: 28
-                   }
-               }
-           }
-       },
-   });
-});
+}
