@@ -55,7 +55,10 @@ body {
 
 
 }
-
+/* .input-group input {
+   box-sizing: border-box;
+   width: 397px;
+} */
 .income-diagramma canvas {
    border-right: 1px solid #D9D9D9;
 

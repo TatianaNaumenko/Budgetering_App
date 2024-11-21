@@ -45,6 +45,7 @@ module.exports = {
         { from: './src/images', to: 'images' },
         { from: './src/fonts', to: 'fonts' },
         { from: './src/styles', to: 'styles' },
+        {from: "./node_modules/chart.js/dist/chart.umd.js", to: "js"},
        
       ]
     })

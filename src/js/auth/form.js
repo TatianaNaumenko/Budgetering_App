@@ -1,14 +1,21 @@
 import config from "../config/config";
-import { Auth } from "../services/auth";
-import { CustomHttp } from "../services/custom-http";
+import { AuthUtils } from "../utils/auth-utils";
+import { HttpUtils } from "../utils/http-utils";
+
+
 
 export class Form {
-   constructor(page) {
+   constructor(openNewRoute, page) {
+      this.openNewRoute = openNewRoute;
       this.page = page;
       this.loginBtnElem = null;
       this.passwordElem = null;
       this.passwordRepeatElem = null;
       this.commonErrorElement = document.getElementById('common-error');
+      this.emailElem = null;
+      this.passwordElem = null;
+      this.rememberMeElem = null;
+      
       this.commonErrorElement.style.display = 'none';
       this.fields = [
          {
@@ -22,7 +29,7 @@ export class Form {
             name: "password",
             id: "password",
             element: null,
-            regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d{8})[a-zA-Z0-9]{0,30}$/,
+            regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8,}$/,
             valid: false,
          },
       ];
@@ -40,7 +47,6 @@ export class Form {
             name: "passwordRepeat",
             id: "passwordRepeat",
             element: null,
-            regex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d{8})[a-zA-Z0-9]{0,30}$/,
             valid: false,
          });
          this.passwordElem = document.getElementById('password');
@@ -99,71 +105,123 @@ export class Form {
 
       if (this.validateForm()) {
 
-         let email = this.fields.find(item => item.name === 'email').element.value;
-         let password = this.fields.find(item => item.name === 'password').element.value;
+         this.emailElem = this.fields.find(item => item.name === 'email').element.value;
+         this.passwordElem = this.fields.find(item => item.name === 'password').element.value;
+         try {
+            if (this.page === 'sign-up') {
 
-         if (this.page === 'sign-up') {
-            let fullName = this.fields.find(item => item.name === 'name').element.value;
-            let [name, lastName] = fullName.split(" ");
-            let passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
-            try {
-               let result = await CustomHttp.request(config.host + '/signup', 'POST', {
+               this.commonErrorElement.style.display = 'none';
+               let fullName = this.fields.find(item => item.name === 'name').element.value;
+               let [name, lastName] = fullName.split(" ");
+               let passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
+
+
+               let result = await HttpUtils.request(config.host + '/signup', 'POST', false, {
                   name: name,
                   lastName: lastName,
-                  email: email,
-                  password: password,
+                  email: this.emailElem ,
+                  password: this.passwordElem,
                   passwordRepeat: passwordRepeat
                })
 
-               if (result.error || !result.response || (result.response && (!result.response.tokens || (result.response.tokens && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user ||
-                  (result.response.user && (!result.response.user.name || !result.response.user.lastName || !result.response.user.id))))))) {
-                  if (result.error || !result.user) {
-                     this.commonErrorElement.style.display = 'block'; // не хочет блок появляться
 
-                     throw new Error(result.message);
-
-                  } else {
-                     this.commonErrorElement.style.display = 'none';
-                     console.log(result);
-                  }
+               if (result.error || !result.response || (result.response && (!result.response.user || (result.response.user && (!result.response.user.id || !result.response.user.email || !result.response.user.name || !result.response.user.lastName))))) {
+                  this.commonErrorElement.style.display = 'block';
+                  throw new Error(result.message);
                }
 
-            } catch (err) {
-               return console.log(err);
+
+               AuthUtils.setAuthInfo(null, null, {
+                  name: result.response.user.name,
+                  email: result.response.user.email,
+                  lastName: result.response.user.lastName,
+                  id: result.response.user.id
+               })
+
+               if (localStorage.getItem('accessToken')) {
+                  return this.openNewRoute('/login')
+               }
+
+               this.openNewRoute('/login')
             }
+
+
+         } catch (error) {
+            return console.log(error)
          }
-         location.href = '#/'; // тут не получается   this.userName.innerText = userInfo.name + ' ' + userInfo.lastName;
-         await this.login(email, password);
+
+
 
       }
-   }
 
-   async login(email, password) {
-      try {
-         const result = await CustomHttp.request(config.host + '/login', 'POST', {
-            email: email,
-            password: password,
-            rememberMe: this.rememberMeElem.checked
-         });
-         if (result.error || !result.response || (result.response && (!result.response.tokens || (result.response.tokens && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user ||
-            (result.response.user && (!result.response.user.name || !result.response.user.lastName || !result.response.user.id))))))) {
-            if (result.error) {
+      if (this.page === 'login') {
+
+         try {
+
+            const result = await HttpUtils.request(config.host + '/login', 'POST', false, {
+               email: this.emailElem.value,
+               password: this.passwordElem.value,
+               rememberMe: this.rememberMeElem.checked
+            })
+
+            if (result.error || !result.response || (result.response && (!result.response.tokens || (result.response.tokens && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user ||
+               (result.response.user && (!result.response.user.name || !result.response.user.lastName || !result.response.user.id))))))) {
+                  this.commonErrorElement.style.display = 'block';
                throw new Error(result.message);
             }
 
-            Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-            Auth.setUserInfo({
-               name: result.user.name,
-               lastName: result.user.lastName,
-               userId: result.user.id,
-               userEmail: email
-            });
-            location.href = '#/';
+
+
+
+            AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
+               name: result.response.user.name,
+               lastName: result.response.user.lastName,
+               id: result.response.user.id
+            })
+
+
+
+            this.openNewRoute('/')
+
+         } catch (error) {
+            return console.log(error)
          }
-      } catch (error) {
-         console.log(error);
+
+
+
+
+
       }
+
    }
+   // async login(email, password) {
+   //    try {
+   //       const result = await CustomHttp.request(config.host + '/login', 'POST', {
+   //          email: email,
+   //          password: password,
+   //          rememberMe: false
+   //       });
+
+   //       if (result.error) {
+
+   //          throw new Error(result.message);
+
+   //       }
+
+   //       Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+   //       Auth.setUserInfo({
+   //          name: result.user.name,
+   //          lastName: result.user.lastName,
+   //          userId: result.user.id,
+   //          userEmail: email
+   //       });
+   //       location.href = '#/';
+   //    } catch (error) {
+   //       console.log(error);
+   //    }
+   // }
+
+
 
 }
 

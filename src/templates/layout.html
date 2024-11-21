@@ -1,6 +1,6 @@
 
   <section class="wrapper-layout d-flex">
-    <aside class="sidebar d-flex flex-column flex-shrink-0 p-3 ">
+    <aside class="sidebar d-flex flex-column flex-shrink-0 p-3 " id="sidebar">
       <div class="logo-container d-flex align-items-center  justify-content-center">
         <a href="../templates/pages/main.html">
           <img src="../images/logo-layout.png" alt="логотип">
@@ -13,7 +13,7 @@
 
       <ul class="menu nav nav-pills flex-column mb-auto ">
         <li>
-          <a href="dashboard.html" class="main-menu-item nav-link d-flex flex-nowrap" aria-current="page" id="mainPage">
+          <a href="#/" class="main-menu-item nav-link d-flex flex-nowrap" aria-current="page" id="mainPage">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon bi bi-house"
               viewBox="0 0 16 16">
               <path
@@ -23,7 +23,7 @@
             Главная</a>
         </li>
         <li>
-          <a href="income-and-expenses.html" class="main-menu-item nav-link  d-flex flex-nowrap">
+          <a href="#/income-and-expenses.html" class="main-menu-item nav-link  d-flex flex-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
               class="icon bi bi-cash-coin" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8m5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0"></path>
@@ -40,7 +40,7 @@
         </li>
         <li class="dropdown-li" id="dropdown-li">
           <a class="main-menu-item menu-dropdown-link  nav-link d-flex align-content-center justify-content-between collapsed "
-            href="#" id="menu-dropdown-link" data-bs-toggle="collapse" data-bs-target="#categories"
+            href="javascript:void(0)" id="menu-dropdown-link" data-bs-toggle="collapse"  data-bs-target="#categories"
             aria-expanded="false">
             Категории
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="arrow"
@@ -52,21 +52,21 @@
           </a>
           <ul class="main-menu-dropdown menu-dropdown  w-220px collapse" id="categories" data-bs-theme="light">
             <li>
-              <a class="menu-dropdown-item nav-link  " href="income.html">Доходы</a>
+              <a class="menu-dropdown-item nav-link  " href="#/income.html">Доходы</a>
             </li>
             <li>
-              <a class="menu-dropdown-item nav-link  " href="expenses.html">Расходы</a>
+              <a class="menu-dropdown-item nav-link  " href="#/expenses.html">Расходы</a>
             </li>
           </ul>
         </li>
       </ul>
       <div class="balance">
-        <span>Баланс: </span><span id="balance-amount">500$</span>
+        <span>Баланс: </span><span id="balance-amount"></span>
       </div>
       <hr class="border-line">
 
       <div class="d-flex align-items-center user-content">
-        <a href="#" class="d-flex align-items-center link-dark text-decoration-none" aria-expanded="false">
+        <a href="javascript:void(0)" class="d-flex align-items-center link-dark text-decoration-none" aria-expanded="false">
           <div class="avatar d-flex justify-content-center align-items-center">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -82,7 +82,7 @@
         </a>
 
         <div class="signOut-wrapper">
-          <a href="#" id="logOut">Выйти</a>
+          <a href="javascript:void(0)" id="logOut">Выйти</a>
         </div>
       </div>
     </aside>
