@@ -10,6 +10,7 @@ export class Router {
       this.contentLayoutElement = null;
       this.headerTitleElem = null;
       this.layoutPath = '/templates/layout.html';
+      this.balanceElem = null;
       this.routes = [
          {
             route: '/',
@@ -222,6 +223,7 @@ export class Router {
                this.logOutElement = document.getElementById('logOut');
                this.headerTitleElem = document.getElementById('header-title');
                this.headerTitleElem.innerText = newRoute.title;
+               this.balanceElem = document.getElementById('balance-amount');
 
                let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
                if (userInfo) {
@@ -268,7 +270,9 @@ export class Router {
           return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
       }
 
-      document.getElementById('balance-amount').innerText = result.response.balance + '$'
+      this.balanceElem.innerText = result.response.balance + '$';
+      // // создать функцию обновления баланса
+      // updatehBalance().then();
 
    }
 
@@ -282,5 +286,18 @@ export class Router {
           }
       })
   }
+
+//   async updateBalance(){
+//    const result = await HttpUtils.request('/balance', 'PUT')
+//    if (result.redirect) {
+//        return this.openNewRoute(result.redirect);
+//    }
+//    if (result.error || !result.response || (result.response && result.response.error)) {
+//        return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
+//    }
+//    this.balanceElem.innerText = result.response.balance + '$';
+//   }
+
+
 }
 

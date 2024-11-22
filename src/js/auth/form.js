@@ -149,9 +149,6 @@ export class Form {
          } catch (error) {
             return console.log(error)
          }
-
-
-
       }
 
       if (this.page === 'login') {
@@ -170,17 +167,11 @@ export class Form {
                throw new Error(result.message);
             }
 
-
-
-
             AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
                name: result.response.user.name,
                lastName: result.response.user.lastName,
                id: result.response.user.id
             })
-
-
-
             this.openNewRoute('/')
 
          } catch (error) {
