@@ -8,6 +8,7 @@ export class Router {
       this.contentElement = document.getElementById('content');
       this.titlePageElement = document.getElementById('title-page');
       this.contentLayoutElement = null;
+      this.headerTitleElem = null;
       this.layoutPath = '/templates/layout.html';
       this.routes = [
          {
@@ -219,6 +220,9 @@ export class Router {
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');
                this.logOutElement = document.getElementById('logOut');
+               this.headerTitleElem = document.getElementById('header-title');
+               this.headerTitleElem.innerText = newRoute.title;
+
                let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
                if (userInfo) {
                   userInfo = JSON.parse(userInfo)
@@ -236,6 +240,7 @@ export class Router {
                this.getBalance().then()
                this.activateMenuItem(newRoute);
                this.contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+               this
 
             }
             

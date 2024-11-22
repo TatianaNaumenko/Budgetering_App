@@ -1,4 +1,3 @@
-import config from "../config/config";
 import { AuthUtils } from "../utils/auth-utils";
 import { HttpUtils } from "../utils/http-utils";
 
@@ -15,7 +14,7 @@ export class Form {
       this.emailElem = null;
       this.passwordElem = null;
       this.rememberMeElem = null;
-      
+
       this.commonErrorElement.style.display = 'none';
       this.fields = [
          {
@@ -120,7 +119,7 @@ export class Form {
                let result = await HttpUtils.request('/signup', 'POST', false, {
                   name: name,
                   lastName: lastName,
-                  email: this.emailElem ,
+                  email: this.emailElem,
                   password: this.passwordElem,
                   passwordRepeat: passwordRepeat
                })
@@ -167,7 +166,7 @@ export class Form {
 
             if (result.error || !result.response || (result.response && (!result.response.tokens || (result.response.tokens && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user ||
                (result.response.user && (!result.response.user.name || !result.response.user.lastName || !result.response.user.id))))))) {
-                  this.commonErrorElement.style.display = 'block';
+               this.commonErrorElement.style.display = 'block';
                throw new Error(result.message);
             }
 
