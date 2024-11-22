@@ -1,4 +1,5 @@
 import { Form } from "./js/auth/form";
+import { MainChart } from "./js/chart/mainChart";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 

@@ -62,7 +62,8 @@ export class Form {
 
       });
       this.loginBtnElem = document.getElementById("loginBtn");
-      this.loginBtnElem.addEventListener('click', () => {
+      this.loginBtnElem.addEventListener('click', (e) => {
+         e.preventDefault();
          this.processForm();
 
       });
@@ -116,7 +117,7 @@ export class Form {
                let passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
 
 
-               let result = await HttpUtils.request(config.host + '/signup', 'POST', false, {
+               let result = await HttpUtils.request('/signup', 'POST', false, {
                   name: name,
                   lastName: lastName,
                   email: this.emailElem ,
@@ -158,9 +159,9 @@ export class Form {
 
          try {
 
-            const result = await HttpUtils.request(config.host + '/login', 'POST', false, {
-               email: this.emailElem.value,
-               password: this.passwordElem.value,
+            const result = await HttpUtils.request('/login', 'POST', false, {
+               email: this.emailElem,
+               password: this.passwordElem,
                rememberMe: this.rememberMeElem.checked
             })
 
