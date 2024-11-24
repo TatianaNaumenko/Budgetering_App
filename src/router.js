@@ -1,6 +1,8 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
-import { IncomeExpenses } from "./js/income&expense/income&expense";
+import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
+import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
+import { IncomeExpenses } from "./js/income-expense/income-expense";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 
@@ -45,7 +47,7 @@ export class Router {
          {
             route: '/incomes-expenses',
             title: ' Доходы & Расходы',
-            template: '/templates/pages/income&expense/incomes&expenses.html',
+            template: '/templates/pages/income-expense/incomes-expenses.html',
             useLayout: this.layoutPath,
             load: () => {
                new IncomeExpenses(this.openNewRoute.bind(this));
@@ -54,7 +56,7 @@ export class Router {
          {
             route: '/edit-income-expense',
             title: 'Редактирование дохода/расхода',
-            template: '/templates/income-expenses/edit-incomes-category.html',
+            template: '/templates/pages/income-expense/edit-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
                new EditIncomeExpense(this.openNewRoute.bind(this))
@@ -130,7 +132,7 @@ export class Router {
          {
             route: '/create-expense-in-income-expense',
             title: 'Создание дохода/расхода',
-            template: '/templates/income&expense/create-income&expense.html',
+            template: '/templates/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateExpenseInIncomeExpense(this.openNewRoute.bind(this))
@@ -139,7 +141,7 @@ export class Router {
          {
             route: '/create-income-in-income-expense',
             title: 'Создание дохода/расхода',
-            template: '/templates/income&expense/create-income&expense.html',
+            template: '/templates/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateIncomeInIncomeExpense(this.openNewRoute.bind(this))
