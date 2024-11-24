@@ -33,6 +33,10 @@ body {
    width: 100%;
 }
 
+.main-container {
+   margin: 0 
+}
+
 .logo-content {
    margin-bottom: 60px;
 }
@@ -90,7 +94,7 @@ body {
 }
 
 .days-navigation {
-   margin-bottom: 140px;
+   margin-bottom: 40px;
    margin-left: 60px;
 }
 
@@ -112,4 +116,17 @@ body {
    height: 100%;
    border-radius: 12px;
 
+}
+
+.data-period {
+   display: flex;
+}
+
+.data-period input {
+   cursor: pointer;
+   margin-right: 15px;
+}
+
+.order-tools a {
+   margin-right: 10px;
 }

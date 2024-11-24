@@ -185,32 +185,6 @@ export class Form {
       }
 
    }
-   // async login(email, password) {
-   //    try {
-   //       const result = await CustomHttp.request(config.host + '/login', 'POST', {
-   //          email: email,
-   //          password: password,
-   //          rememberMe: false
-   //       });
-
-   //       if (result.error) {
-
-   //          throw new Error(result.message);
-
-   //       }
-
-   //       Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
-   //       Auth.setUserInfo({
-   //          name: result.user.name,
-   //          lastName: result.user.lastName,
-   //          userId: result.user.id,
-   //          userEmail: email
-   //       });
-   //       location.href = '#/';
-   //    } catch (error) {
-   //       console.log(error);
-   //    }
-   // }
 
 
 

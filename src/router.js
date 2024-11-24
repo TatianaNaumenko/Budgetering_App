@@ -1,5 +1,6 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
+import { IncomeExpenses } from "./js/income&expense/income&expense";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 
@@ -42,15 +43,9 @@ export class Router {
          },
 
          {
-            route: '/logout',
-            load: () => {
-               new Logout(this.openNewRoute.bind(this))
-            }
-         },
-         {
-            route: '/income-expenses',
+            route: '/incomes-expenses',
             title: ' Доходы & Расходы',
-            template: '/templates/income&expenses/incomes&expenses.html',
+            template: '/templates/pages/income&expense/incomes&expenses.html',
             useLayout: this.layoutPath,
             load: () => {
                new IncomeExpenses(this.openNewRoute.bind(this));
@@ -234,10 +229,11 @@ export class Router {
                } else {
                   location.href = '/login'
                }
+               // обработадла выход из приложения
                this.logOutElement.addEventListener('click', (e) => {
                   e.preventDefault();
                   AuthUtils.removeAuthInfo();
-                   location.href = '/login'
+                  location.href = '/login'
                })
                this.getBalance().then()
                this.activateMenuItem(newRoute);
@@ -245,7 +241,7 @@ export class Router {
                this
 
             }
-            
+
          }
 
          if (newRoute.load && typeof newRoute.load === 'function') {
@@ -264,10 +260,10 @@ export class Router {
    async getBalance() {
       const result = await HttpUtils.request('/balance')
       if (result.redirect) {
-          return this.openNewRoute(result.redirect);
+         return this.openNewRoute(result.redirect);
       }
       if (result.error || !result.response || (result.response && result.response.error)) {
-          return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
+         return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
       }
 
       this.balanceElem.innerText = result.response.balance + '$';
@@ -278,25 +274,25 @@ export class Router {
 
    activateMenuItem(route) {
       document.querySelectorAll('#sidebar .menu .nav-link').forEach(item => {
-          let href = item.getAttribute('href')
-          if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
-              item.classList.add('active');
-          } else {
-              item.classList.remove('active');
-          }
+         let href = item.getAttribute('href')
+         if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
+            item.classList.add('active');
+         } else {
+            item.classList.remove('active');
+         }
       })
-  }
+   }
 
-//   async updateBalance(){
-//    const result = await HttpUtils.request('/balance', 'PUT')
-//    if (result.redirect) {
-//        return this.openNewRoute(result.redirect);
-//    }
-//    if (result.error || !result.response || (result.response && result.response.error)) {
-//        return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
-//    }
-//    this.balanceElem.innerText = result.response.balance + '$';
-//   }
+   //   async updateBalance(){
+   //    const result = await HttpUtils.request('/balance', 'PUT')
+   //    if (result.redirect) {
+   //        return this.openNewRoute(result.redirect);
+   //    }
+   //    if (result.error || !result.response || (result.response && result.response.error)) {
+   //        return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
+   //    }
+   //    this.balanceElem.innerText = result.response.balance + '$';
+   //   }
 
 
 }

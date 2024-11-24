@@ -3,47 +3,55 @@
    
          <ul class="days-navigation d-flex flex-wrap p-0  list-unstyled col-12">
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100 active">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100 active" data-period="today" id="today">
                     Сегодня
                 </a>
             </li>
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100" data-period="week" id="week">
                     Неделя
                 </a>
             </li>
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100" data-period="month">
                     Месяц
                 </a>
             </li>
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100" data-period="year">
                     Год
                 </a>
             </li>
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100" data-period="all">
                     Все
                 </a>
             </li>
             <li class="">
-                <a href="#" class="select-interval btn btn-outline-secondary w-100">
+                <a href="#" class="select-interval btn btn-outline-secondary w-100" data-period="interval">
                     Интервал
                 </a>
             </li>
-            <li class=" d-flex align-items-center justify-content-around">
-                <span>c</span>
-                <a href="#" class="text-secondary text-decoration-none" id="data-from">
-                    Дата
-                </a>
+            <li class="data-period">
+<!--             
+                    <label for="start-date">c</label>
+                    <input type="date"  id="start-date" name="start">
+                    
+                    <label for="end-date">по</label>
+                    <input type="date"   id="end-date" name="start""> -->
+                
+                <span  class="s">с </span>
+                <input type="text" size="3" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'"
+                       id="start-date" name="start"
+                       placeholder="Дата" class="date text-decoration-underline border-0"
+                       style="width: 100px; display: inline-block;">
+                <span class="p"> по</span>
+                <input type="text" size="3" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'"
+                       id="end-date" name="end"
+                       placeholder="Дата" class="date text-decoration-underline border-0"
+                       style="width: 100px; display: inline-block;">
             </li>
-            <li class=" d-flex align-items-center justify-content-around">
-                <span>по</span>
-                <a href="#" class="text-secondary text-decoration-none" id="data-till">
-                    Дата
-                </a>
-            </li>
+
         </ul>
         <div class="row main-diagramm">
          <div class="income-diagramma col-md-5" style="width: 400px;">

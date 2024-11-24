@@ -46,6 +46,8 @@ module.exports = {
         { from: './src/fonts', to: 'fonts' },
         { from: './src/styles', to: 'styles' },
         {from: "./node_modules/chart.js/dist/chart.umd.js", to: "js"},
+        { from: "./node_modules/moment/min/moment.min.js", to: "js" },
+        { from: "./node_modules/moment/min/locales.js", to: "js" },
        
       ]
     })
