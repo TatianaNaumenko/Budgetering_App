@@ -1,8 +1,11 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
+import { DeleteExpense } from "./js/expense/delete-expense";
+import { Expense } from "./js/expense/expense";
 import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
+import { Income } from "./js/income/income";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 
@@ -69,9 +72,9 @@ export class Router {
             }
          },
          {
-            route: '/expense',
+            route: '/expenses',
             title: 'Расходы',
-            template: '/templates/expense/expenses.html',
+            template: '/templates/pages/expense/expenses.html',
             useLayout: this.layoutPath,
             load: () => {
                new Expense(this.openNewRoute.bind(this))
@@ -105,6 +108,7 @@ export class Router {
                new CreateExpense(this.openNewRoute.bind(this))
             }
          },
+         
          {
             route: '/delete-expense',
             load: () => {
@@ -112,9 +116,9 @@ export class Router {
             }
          },
          {
-            route: '/income',
+            route: '/incomes',
             title: ' Доходы',
-            template: '/templates/income/incomes.html',
+            template: '/templates/pages/income/incomes.html',
             useLayout: this.layoutPath,
             load: () => {
                new Income(this.openNewRoute.bind(this))

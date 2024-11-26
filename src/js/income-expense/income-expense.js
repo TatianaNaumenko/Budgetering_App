@@ -69,7 +69,7 @@ export class IncomeExpenses {
               deleteButtons[i].addEventListener('click', (event) => {
                   let operationId = event.target.closest('.delete-btn').getAttribute('data-id');
                   let deleteBtn = document.getElementById('delete-btn');
-                  deleteBtn.setAttribute('href', '/delete-income-expense?id=' + operationId);
+                  deleteBtn.setAttribute('href', '/delete-income?id=' + operationId);
               });
           }
       }
