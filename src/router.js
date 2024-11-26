@@ -5,6 +5,7 @@ import { Expense } from "./js/expense/expense";
 import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
+import { DeleteIncome } from "./js/income/delete-income";
 import { Income } from "./js/income/income";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
@@ -108,13 +109,7 @@ export class Router {
                new CreateExpense(this.openNewRoute.bind(this))
             }
          },
-         
-         {
-            route: '/delete-expense',
-            load: () => {
-               new DeleteExpense(this.openNewRoute.bind(this))
-            }
-         },
+
          {
             route: '/incomes',
             title: ' Доходы',
@@ -160,12 +155,7 @@ export class Router {
                new EditIncome(this.openNewRoute.bind(this))
             }
          },
-         {
-            route: '/delete-income',
-            load: () => {
-               new DeleteIncome(this.openNewRoute.bind(this))
-            }
-         },
+     
       ]
       this.initEvents();
    }
