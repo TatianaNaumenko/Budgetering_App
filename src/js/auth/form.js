@@ -6,13 +6,16 @@ import { HttpUtils } from "../utils/http-utils";
 export class Form {
    constructor(openNewRoute, page) {
       this.openNewRoute = openNewRoute;
+      if (AuthUtils.getAuthInfo(AuthUtils.accessTokenKey)) {
+         return this.openNewRoute('/');
+      }
+
       this.page = page;
       this.loginBtnElem = null;
       this.passwordElem = null;
       this.passwordRepeatElem = null;
       this.commonErrorElement = document.getElementById('common-error');
       this.emailElem = null;
-      this.passwordElem = null;
       this.rememberMeElem = null;
 
       this.commonErrorElement.style.display = 'none';
@@ -103,14 +106,16 @@ export class Form {
 
    async processForm() {
 
-      if (this.validateForm()) {
-
+      if (!this.validateForm()) {
+         this.commonErrorElement.innerText = 'Заполните корректно поля формы!';
+         return
+      }
          this.emailElem = this.fields.find(item => item.name === 'email').element.value;
          this.passwordElem = this.fields.find(item => item.name === 'password').element.value;
          try {
             if (this.page === 'sign-up') {
 
-               this.commonErrorElement.style.display = 'none';
+               // this.commonErrorElement.style.display = 'none';
                let fullName = this.fields.find(item => item.name === 'name').element.value;
                let [name, lastName] = fullName.split(" ");
                let passwordRepeat = this.fields.find(item => item.name === 'passwordRepeat').element.value;
@@ -124,10 +129,12 @@ export class Form {
                   passwordRepeat: passwordRepeat
                })
 
-
+               console.log(result)
                if (result.error || !result.response || (result.response && (!result.response.user || (result.response.user && (!result.response.user.id || !result.response.user.email || !result.response.user.name || !result.response.user.lastName))))) {
-                  this.commonErrorElement.style.display = 'block';
-                  throw new Error(result.message);
+                  this.commonErrorElement.style.display = 'block'
+                  this.commonErrorElement.innerText = 'Не удалось зарегестрировать пользователя. Обратитесь в поддержку';
+                  throw new Error(result.response.message);
+
                }
 
 
@@ -138,7 +145,7 @@ export class Form {
                   id: result.response.user.id
                })
 
-               if (localStorage.getItem('accessToken')) {
+               if (AuthUtils.getAuthInfo(userInfoKey)) {
                   return this.openNewRoute('/login')
                }
 
@@ -149,7 +156,7 @@ export class Form {
          } catch (error) {
             return console.log(error)
          }
-      }
+   
 
       if (this.page === 'login') {
 
@@ -163,8 +170,8 @@ export class Form {
 
             if (result.error || !result.response || (result.response && (!result.response.tokens || (result.response.tokens && (!result.response.tokens.accessToken || !result.response.tokens.refreshToken || !result.response.user ||
                (result.response.user && (!result.response.user.name || !result.response.user.lastName || !result.response.user.id))))))) {
-               this.commonErrorElement.style.display = 'block';
-               throw new Error(result.message);
+               this.commonErrorElement.innerText = 'Не удалось зарегестрировать пользователя. Обратитесь в поддержку';
+               throw new Error(result.response.message);
             }
 
             AuthUtils.setAuthInfo(result.response.tokens.accessToken, result.response.tokens.refreshToken, {
@@ -189,5 +196,4 @@ export class Form {
 
 
 }
-
 

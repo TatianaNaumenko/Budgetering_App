@@ -136,3 +136,7 @@ max-width: 352px;
 .order-tools a {
    margin-right: 10px;
 }
+
+form {
+  width:  397px;
+}

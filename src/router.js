@@ -155,7 +155,7 @@ export class Router {
                new EditIncome(this.openNewRoute.bind(this))
             }
          },
-     
+
       ]
       this.initEvents();
    }
@@ -232,9 +232,20 @@ export class Router {
                   location.href = '/login'
                })
                this.getBalance().then()
-               this.activateMenuItem(newRoute);
+               this.activateLink('.main-menu-item');
+               let menuDropdownLink = document.getElementById('menu-dropdown-link');
+               if (menuDropdownLink) {
+                  menuDropdownLink.addEventListener('click', (e) => {
+                     e.preventDefault();
+                     menuDropdownLink.classList.add('active');
+                     this.activateLink('.menu-dropdown-item');
+                     
+
+                  })
+          
+               }
+
                this.contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
-               this
 
             }
 
@@ -268,16 +279,33 @@ export class Router {
 
    }
 
-   activateMenuItem(route) {
-      document.querySelectorAll('#sidebar .menu .nav-link').forEach(item => {
-         let href = item.getAttribute('href')
-         if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
-            item.classList.add('active');
+
+   activateLink(elemClass) {
+      let currentlocation = window.location.pathname;
+      let menuLinks = document.querySelectorAll(elemClass);
+      menuLinks.forEach((link) => {
+         let linkHref = link.getAttribute('href');
+         if (linkHref === currentlocation) {
+            link.classList.add('active');
+
          } else {
-            item.classList.remove('active');
+            link.classList.remove('active');
          }
+         
       })
    }
+
+
+   // activateMenuItem(route) {
+   //    document.querySelectorAll('#sidebar .menu .nav-link').forEach(item => {
+   //       item.classList.remove('active');
+   //       if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
+   //          item.classList.add('active');
+   //       } else {
+   //          item.classList.remove('active');
+   //       }
+   //    })
+   // }
 
    //   async updateBalance(){
    //    const result = await HttpUtils.request('/balance', 'PUT')
