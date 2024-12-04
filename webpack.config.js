@@ -29,6 +29,7 @@ module.exports = {
       },
     ],
   },
+  
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html', // Путь к вашему основному HTML файлу
@@ -37,10 +38,16 @@ module.exports = {
     new CopyPlugin({
       patterns: [
          // Копирование компонентов
-        { from: './src/templates', to: 'templates' },
+         { from: './src/js', to: 'js' }, 
+         { from: './node_modules/bootstrap/dist/js/bootstrap.min.js', to: 'js' }, 
+         { from: './node_modules/bootstrap/dist/css/bootstrap.min.css', to: 'styles' }, 
+           { from: './src/templates', to: 'templates' },
         { from: './src/images', to: 'images' },
         { from: './src/fonts', to: 'fonts' },
         { from: './src/styles', to: 'styles' },
+        {from: "./node_modules/chart.js/dist/chart.umd.js", to: "js"},
+        { from: "./node_modules/moment/min/moment.min.js", to: "js" },
+        { from: "./node_modules/moment/min/locales.js", to: "js" },
        
       ]
     })

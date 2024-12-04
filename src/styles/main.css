@@ -33,6 +33,10 @@ body {
    width: 100%;
 }
 
+.main-container {
+   margin: 0 
+}
+
 .logo-content {
    margin-bottom: 60px;
 }
@@ -54,6 +58,15 @@ body {
    color: #6C757D;
 
 
+}
+.new-card a {
+   font-size: 15px;
+   color: #CED4DA;
+   
+}
+
+.new-card a:hover {
+   color: #052C65;
 }
 
 .income-diagramma canvas {
@@ -87,7 +100,7 @@ body {
 }
 
 .days-navigation {
-   margin-bottom: 140px;
+   margin-bottom: 40px;
    margin-left: 60px;
 }
 
@@ -105,8 +118,25 @@ body {
 
 
 .card {
-
+max-width: 352px;
    height: 100%;
    border-radius: 12px;
 
+}
+
+.data-period {
+   display: flex;
+}
+
+.data-period input {
+   cursor: pointer;
+   margin-right: 15px;
+}
+
+.order-tools a {
+   margin-right: 10px;
+}
+
+form {
+  width:  397px;
 }

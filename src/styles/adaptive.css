@@ -1,6 +1,9 @@
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 425px) {
   .action .btn {
    margin-bottom: 10px;
+  }
+  form {
+    width: 280px;
   }
  
 }
