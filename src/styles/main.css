@@ -140,3 +140,18 @@ max-width: 352px;
 form {
   width:  397px;
 }
+
+.container-fluid{
+   padding: 0;
+}
+.form-wrapper {
+   max-width: 397px;
+   margin-left: 60px;
+}
+ .form-select, .form-control {
+   margin-bottom: 10px;
+   height: 38px;
+ }
+ .btn-wrapper {
+margin-top: 20px;
+ }

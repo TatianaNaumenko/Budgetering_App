@@ -1,11 +1,16 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
+import { CreateExpense } from "./js/expense/create-expense";
 import { DeleteExpense } from "./js/expense/delete-expense";
+import { EditExpense } from "./js/expense/edit-expense";
 import { Expense } from "./js/expense/expense";
+import { CreateExpenseInIncomeExpense, CreateIncomeExpenseInIncomeExpense } from "./js/income-expense/create-income-expense-in-income-expense";
 import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
+import { CreateIncome } from "./js/income/create-income";
 import { DeleteIncome } from "./js/income/delete-income";
+import { EditIncome } from "./js/income/edit-income";
 import { Income } from "./js/income/income";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
@@ -85,7 +90,7 @@ export class Router {
          {
             route: '/create-expense',
             title: 'Создание категории расходов',
-            template: '/templates/expense/create-expenses-category.html',
+            template: '/templates/pages/expense/create-expenses-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateExpense(this.openNewRoute.bind(this))
@@ -94,7 +99,7 @@ export class Router {
          {
             route: '/edit-expense',
             title: 'Редактирование расхода',
-            template: '/templates/expense/edit-expenses-category.html',
+            template: '/templates/pages/expense/edit-expenses-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new EditExpense(this.openNewRoute.bind(this))
@@ -122,7 +127,7 @@ export class Router {
          {
             route: '/create-income',
             title: ' Создание категории доходов',
-            template: '/templates/income/create-incomes-category.html',
+            template: '/templates/pages/income/create-incomes-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateIncome(this.openNewRoute.bind(this))
@@ -131,25 +136,25 @@ export class Router {
          {
             route: '/create-expense-in-income-expense',
             title: 'Создание дохода/расхода',
-            template: '/templates/income-expense/create-income-expense.html',
+            template: '/templates/pages/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
-               new CreateExpenseInIncomeExpense(this.openNewRoute.bind(this))
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this),'income')
             }
          },
          {
             route: '/create-income-in-income-expense',
             title: 'Создание дохода/расхода',
-            template: '/templates/income-expense/create-income-expense.html',
+            template: '/templates/pages/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
-               new CreateIncomeInIncomeExpense(this.openNewRoute.bind(this))
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
             }
          },
          {
             route: '/edit-income',
             title: 'Редактирование дохода',
-            template: '/templates/income/edit-incomes-category.html',
+            template: '/templates/pages/income/edit-incomes-categoty.html',
             useLayout: this.layoutPath,
             load: () => {
                new EditIncome(this.openNewRoute.bind(this))

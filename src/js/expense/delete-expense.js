@@ -1,27 +1,27 @@
-import { HttpUtils } from "../utils/http-utils";
+// import { HttpUtils } from "../utils/http-utils";
 
-export class DeleteExpense{
-   constructor(openNewRoute) {
-      this.openNewRoute = openNewRoute;
-      const urlParams = new URLSearchParams(window.location.search); //находим нужный id
-      const id = urlParams.get('id');
+// export class DeleteExpense{
+//    constructor(openNewRoute) {
+//       this.openNewRoute = openNewRoute;
+//       const urlParams = new URLSearchParams(window.location.search); //находим нужный id
+//       const id = urlParams.get('id');
 
-      if (!id) {
-          return this.openNewRoute('/');
-      }
-      this.deleteCategory(id).then();
-  }
+//       if (!id) {
+//           return this.openNewRoute('/');
+//       }
+//       this.deleteCategory(id).then();
+//   }
 
-  async deleteCategory(id) { //удаляем операцию
-      const result = await HttpUtils.request('/categories/expense/' + id, 'DELETE', true);
-      if (result.redirect) {
-          return this.openNewRoute(result.redirect);
-      }
+//   async deleteCategory(id) { //удаляем операцию
+//       const result = await HttpUtils.request('/categories/expense/' + id, 'DELETE', true);
+//       if (result.redirect) {
+//           return this.openNewRoute(result.redirect);
+//       }
 
-      if (result.error || !result.response || (result.response && result.response.error)) {
-          console.log(result.response.message);
-          return alert('Возникла ошибка при удалении категории');
-      }
-      return this.openNewRoute('/expenses');
-  }
-}
+//       if (result.error || !result.response || (result.response && result.response.error)) {
+//           console.log(result.response.message);
+//           return alert('Возникла ошибка при удалении категории');
+//       }
+//       return this.openNewRoute('/expenses');
+//   }
+// }
