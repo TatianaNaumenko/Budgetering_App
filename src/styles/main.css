@@ -16,7 +16,7 @@ body {
 }
 
 .registration-content {
-   max-width: 400px;
+   max-width: 397px;
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -49,9 +49,13 @@ body {
 
 }
 
+.input-group-text{
+   height: 38px;
+}
 
-
-
+.reference-to-registration, .form-check-label  {
+   font-size: 12px;
+}
 .form-control::placeholder {
    font-size: 15px;
    line-height: 24px;
@@ -155,3 +159,6 @@ form {
  .btn-wrapper {
 margin-top: 20px;
  }
+.container {
+   padding-left: 60px;
+}

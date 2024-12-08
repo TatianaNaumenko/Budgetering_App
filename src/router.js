@@ -1,7 +1,6 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
 import { CreateExpense } from "./js/expense/create-expense";
-import { DeleteExpense } from "./js/expense/delete-expense";
 import { EditExpense } from "./js/expense/edit-expense";
 import { Expense } from "./js/expense/expense";
 import { CreateExpenseInIncomeExpense, CreateIncomeExpenseInIncomeExpense } from "./js/income-expense/create-income-expense-in-income-expense";
@@ -9,7 +8,6 @@ import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
 import { CreateIncome } from "./js/income/create-income";
-import { DeleteIncome } from "./js/income/delete-income";
 import { EditIncome } from "./js/income/edit-income";
 import { Income } from "./js/income/income";
 import { AuthUtils } from "./js/utils/auth-utils";
@@ -139,7 +137,7 @@ export class Router {
             template: '/templates/pages/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
-               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this),'income')
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
             }
          },
          {
@@ -148,7 +146,7 @@ export class Router {
             template: '/templates/pages/income-expense/create-income-expense.html',
             useLayout: this.layoutPath,
             load: () => {
-               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'income')
             }
          },
          {
@@ -220,7 +218,7 @@ export class Router {
                this.headerTitleElem = document.getElementById('header-title');
                this.headerTitleElem.innerText = newRoute.title;
                this.balanceElem = document.getElementById('balance-amount');
-
+          
                let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
                if (userInfo) {
                   userInfo = JSON.parse(userInfo)
@@ -244,10 +242,10 @@ export class Router {
                      e.preventDefault();
                      menuDropdownLink.classList.add('active');
                      this.activateLink('.menu-dropdown-item');
-                     
+
 
                   })
-          
+
                }
 
                this.contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
@@ -296,7 +294,7 @@ export class Router {
          } else {
             link.classList.remove('active');
          }
-         
+
       })
    }
 
@@ -311,9 +309,11 @@ export class Router {
    //       }
    //    })
    // }
-
+   // я не знаю где и зачем применить эту функцию
    //   async updateBalance(){
-   //    const result = await HttpUtils.request('/balance', 'PUT')
+   //    const result = await HttpUtils.request('/balance', 'PUT', true, {
+   //       newBalance: 1000
+   //    })
    //    if (result.redirect) {
    //        return this.openNewRoute(result.redirect);
    //    }

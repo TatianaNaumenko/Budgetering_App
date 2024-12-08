@@ -19,13 +19,31 @@ export class CreateIncomeExpenseInIncomeExpense {
    }
 
 
-   async getCategories(type) {
-      const result = await HttpUtils.request(`/categories/${type}`);
-      this.operation = result.response;
-      this.showCategories(this.operation);
-      this.showOption(type);
-  }
+//    async getCategories(type) {
 
+      
+//       const result = await HttpUtils.request(`/categories/${type}`);
+//       this.operation = result.response;
+//       this.showCategories(this.operation);
+//       this.showOption(type);
+//   }
+async getCategories(type) {
+   try {
+       const result = await HttpUtils.request(`/categories/${type}`);
+       
+       // Проверка на ошибки в результате
+       if (result.error || !result.response) {
+           throw new Error('Не удалось загрузить категории. Попробуйте еще раз.');
+       }
+
+       this.operation = result.response;
+       this.showCategories(this.operation);
+       this.showOption(type);
+   } catch (error) {
+       console.error('Ошибка при получении категорий:', error);
+       alert(error.message || 'Произошла ошибка при загрузке категорий. Обратитесь в поддержку.');
+   }
+}
 
    showOption(type) {
        const optionElement = document.createElement('option');

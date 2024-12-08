@@ -13,6 +13,7 @@ export class MainChart {
 
     async init() {
         await this.getOperations('all'); // Получаем все операции
+  
         new DateFilter(this.getOperations.bind(this)); // Инициализируем DateFilter
     }
 
@@ -30,6 +31,7 @@ export class MainChart {
             if (result.error || !result.response || (result.response && result.response.error)) {
                 throw new Error('Возникла ошибка при запросе операций');
             }
+            console.log(result.response)
             this.loadOperationsIntoChart(result.response);
         } catch (error) {
             console.log(error.message);

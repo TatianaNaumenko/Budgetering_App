@@ -8,38 +8,38 @@ export class Expense {
         this.openNewRoute = openNewRoute;
         this.getExpense().then();
     }
- 
+
     async getExpense() {
         const result = await HttpUtils.request('/categories/expense');
- 
+
         if (result.redirect) {
             return this.openNewRoute(result.redirect);
         }
- 
+
         if (result.error || !result.response || (result.response && result.response.error)) {
             console.log(result.response.message || 'Возникла ошибка при запросе. Обратитесь в поддержку');
             return;
         }
- 
+
         this.getExpenseList(result.response);
     }
- 
+
     getExpenseList(expenses) {
         let cardsElement = document.getElementById('cards');
- 
+
         if (cardsElement) {
             cardsElement.innerHTML = "";
- // проходим по объектам массива incomes
+            // проходим по объектам массива incomes
             expenses.forEach(expense => {
                 let cardElement = this.createExpenseCard(expense);
                 cardsElement.appendChild(cardElement);
             });
         }
- 
+
         this.addNewCardLink(cardsElement);
         this.categoryDeleteEventListeners();
     }
- // передаем объект в функцию создания карточки дохода
+    // передаем объект в функцию создания карточки дохода
     createExpenseCard(expense) {
         let cardElement = document.createElement('div');
         cardElement.className = 'col-md-4 mb-4';
@@ -54,7 +54,7 @@ export class Expense {
         `;
         return cardElement;
     }
- 
+
     addNewCardLink(cardsElement) {
         const cardLinkElement = document.createElement('div');
         cardLinkElement.className = 'new-card col-md-4 mb-4 card h3 p-3 d-flex justify-content-center align-items-center';
@@ -63,13 +63,13 @@ export class Expense {
         `;
         cardsElement.appendChild(cardLinkElement);
     }
- 
+
     categoryDeleteEventListeners() {
         document.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-card')) {
                 const operationId = event.target.getAttribute('data-id');
                 const deleteBtn = document.getElementById('delete-btn');
-                
+
                 deleteBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     CategoryDeleter.deleteCategory('expense', operationId, this.openNewRoute);
@@ -77,4 +77,4 @@ export class Expense {
             }
         });
     }
- }
+}
