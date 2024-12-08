@@ -41,10 +41,10 @@
          <button  class="btn btn-danger">Отмена</button>
        </form>
    </div> -->
-
+<!-- 
    <div class="container-fluid">
  
-    <div class="create-income select" style="margin-top: 60px">
+    <div class="create-income select container" >
         <select class="form-select" id="type-select" aria-label="Default select example" style="width: 397px; color: #6C757D">
             <option value="type" selected>Тип...</option>
             <option value="income" class="income">Доход</option>
@@ -70,4 +70,21 @@
         <button class="btn btn-success" style="margin-right: 10px; margin-top: 20px" id="update-button">Сохранить</button>
         <a href="/income-expenses" type="button" class="btn btn-danger" style="margin-top: 20px">Отменить</a>
     </div>
+</div> -->
+<div class="container-fluid">
+  <div class="form-wrapper">
+    <select class="form-select" id="type-select" aria-label="Default select example">
+    </select>
+    <select class="form-select" id="category" aria-label="Default select example">
+    </select>
+    <input type="text" class="form-control" id="sum" placeholder="Сумма в $...">
+    <input type="text" class="form-control" id="date" placeholder="Дата..." onfocus="(this.type='date')"
+      onblur="if(!this.value)this.type='text'">
+    <input type="text" class="form-control" id="comment" placeholder="Комментарий...">
+    <div class="btn-wrapper">
+      <button class="btn btn-success" id="update-button">Создать</button>
+      <a href="/incomes-expenses" type="button" class="btn btn-danger">Отменить</a>
+    </div>
+  </div>
+
 </div>
