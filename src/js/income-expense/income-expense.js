@@ -15,6 +15,7 @@ export class IncomeExpenses {
       url = '/operations?period=all';
     }
     const result = await HttpUtils.request(url);
+    // console.log(result.response)
     if (result.redirect) {
       return this.openNewRoute(result.redirect);
     }
@@ -30,6 +31,7 @@ export class IncomeExpenses {
     let recordsElement = document.getElementById('table-record');
     recordsElement.innerHTML = ''; // Очищаем таблицу перед отображением новых данных
     for (let i = 0; i < operations.length; i++) {
+   
       const trElement = document.createElement('tr');
       trElement.insertCell().innerText = i + 1;
       trElement.classList.add('trelement')

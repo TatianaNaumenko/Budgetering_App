@@ -34,6 +34,7 @@ export class CreateIncome {
                 title: this.inputElement.value
             });
 
+
             if(result.redirect) {
                 return this.openNewRoute(result.redirect);
             }

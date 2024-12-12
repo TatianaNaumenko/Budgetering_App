@@ -20,7 +20,7 @@ export class CreateExpense {
    }
 
    async saveCategory(e){
-       e.preventDefault;
+       e.preventDefault();
        if(this.validateForm()){
            const result = await HttpUtils.request('/categories/expense', 'POST', true, {
                title: this.inputElement.value
@@ -33,6 +33,7 @@ export class CreateExpense {
                console.log(result.response.message);
                return alert('Возникла ошибка добавлении категории расхода');
            }
+           alert(`Категория ${this.inputElement.value} успешно добавлена`)
            return this.openNewRoute('/expenses');
        }
    }

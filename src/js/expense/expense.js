@@ -44,23 +44,27 @@ export class Expense {
         let cardElement = document.createElement('div');
         cardElement.className = 'col-md-4 mb-4';
         cardElement.innerHTML = `
-            <div class="card h3 p-3 text-purple-dark">
-                ${expense.title}
-                <div class="action pt-3">
-                    <a href="/edit-expense?id=${expense.id}&title=${expense.title}" class="btn btn-primary">Редактировать</a>
-                    <a href="javascript:void(0)" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${expense.id}">Удалить</a>
-                </div>
+        <div class="card h3 p-3 text-purple-dark">
+            ${expense.title}
+            <div class="action pt-3">
+                <a href="/edit-expense?id=${expense.id}&title=${expense.title}" class="btn btn-primary">Редактировать</a>
+                <a href="javascript:void(0)" class="delete-card btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                 data-id="${expense.id}" data-title="${expense.title}">Удалить</a>
             </div>
-        `;
+        </div>
+    `;
         return cardElement;
     }
 
     addNewCardLink(cardsElement) {
         const cardLinkElement = document.createElement('div');
         cardLinkElement.className = 'new-card col-md-4 mb-4 card h3 p-3 d-flex justify-content-center align-items-center';
+        cardLinkElement.style.height = '121px';
         cardLinkElement.innerHTML = `
-            <a href="/create-expense" class="text-center text-decoration-none">Создать категорию доходов</a>
-        `;
+            <a href="/create-expense" class="text-center text-decoration-none"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
+</svg>
+</a>  `;
         cardsElement.appendChild(cardLinkElement);
     }
 
@@ -68,11 +72,12 @@ export class Expense {
         document.addEventListener('click', (event) => {
             if (event.target.classList.contains('delete-card')) {
                 const operationId = event.target.getAttribute('data-id');
+                const operationTitle = event.target.getAttribute('data-title');
                 const deleteBtn = document.getElementById('delete-btn');
-
+console.log(typeof operationTitle)
                 deleteBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    CategoryDeleter.deleteCategory('expense', operationId, this.openNewRoute);
+                     e.preventDefault();
+                    CategoryDeleter.deleteCategory('expense', operationId, operationTitle, this.openNewRoute);
                 });
             }
         });

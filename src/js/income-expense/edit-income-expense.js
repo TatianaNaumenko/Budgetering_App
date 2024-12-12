@@ -51,9 +51,10 @@ export class EditIncomeExpense {
     showOption(operation) {
         const optionElement = document.createElement('option');
         optionElement.setAttribute('value', operation.type);
-        optionElement.setAttribute('selected', 'selected')
+        optionElement.selected = true;
         optionElement.innerText = operation.type === 'income' ? 'Доход' : 'Расход';
         this.typeSelectElement.appendChild(optionElement);
+        this.typeSelectElement.disabled = true
         this.showCategories(operation.type, operation.category).then();
         this.sumElement.value = operation.amount
         this.dateElement.value = operation.date

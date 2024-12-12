@@ -19,14 +19,6 @@ export class CreateIncomeExpenseInIncomeExpense {
    }
 
 
-//    async getCategories(type) {
-
-      
-//       const result = await HttpUtils.request(`/categories/${type}`);
-//       this.operation = result.response;
-//       this.showCategories(this.operation);
-//       this.showOption(type);
-//   }
 async getCategories(type) {
    try {
        const result = await HttpUtils.request(`/categories/${type}`);
@@ -37,6 +29,7 @@ async getCategories(type) {
        }
 
        this.operation = result.response;
+    //    console.log(this.operation)
        this.showCategories(this.operation);
        this.showOption(type);
    } catch (error) {

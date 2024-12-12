@@ -13,6 +13,7 @@ import { Income } from "./js/income/income";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 
+
 export class Router {
    constructor() {
       this.contentElement = document.getElementById('content');
@@ -210,7 +211,7 @@ export class Router {
          if (newRoute.template) {
             this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
             if (newRoute.useLayout) {
-
+// Layout.initLayout()
                this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text())
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');
