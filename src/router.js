@@ -1,15 +1,16 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
+import { Category } from "./js/common/category";
 import { CreateExpense } from "./js/expense/create-expense";
 import { EditExpense } from "./js/expense/edit-expense";
-import { Expense } from "./js/expense/expense";
+
 import { CreateExpenseInIncomeExpense, CreateIncomeExpenseInIncomeExpense } from "./js/income-expense/create-income-expense-in-income-expense";
 import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
 import { CreateIncome } from "./js/income/create-income";
 import { EditIncome } from "./js/income/edit-income";
-import { Income } from "./js/income/income";
+
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 
@@ -82,7 +83,7 @@ export class Router {
             template: '/templates/pages/expense/expenses.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Expense(this.openNewRoute.bind(this))
+               new Category(this.openNewRoute.bind(this), 'expense' )
             },
 
          },
@@ -120,7 +121,7 @@ export class Router {
             template: '/templates/pages/income/incomes.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Income(this.openNewRoute.bind(this))
+               new Category(this.openNewRoute.bind(this),'income')
             }
          },
          {
@@ -211,7 +212,7 @@ export class Router {
          if (newRoute.template) {
             this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
             if (newRoute.useLayout) {
-// Layout.initLayout()
+
                this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text())
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');

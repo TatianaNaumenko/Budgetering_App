@@ -1,5 +1,7 @@
 import { HttpUtils } from "../utils/http-utils";
 
+
+
 export class CategoryDeleter {
     static async deleteCategory(categoryType, id, categoryTitle, openNewRoute) {
         const categoryRoute = categoryType === 'income' ? '/categories/income/' : '/categories/expense/';
@@ -10,7 +12,7 @@ export class CategoryDeleter {
         const result2 = await HttpUtils.request('/operations?period=all');
         let allOperations = result2.response;
         // console.log(allOperations);
-            let operationsWithCategoryTitle = allOperations.filter( operation => operation.category.toLowerCase().trim() === categoryTitle.toLowerCase().trim());
+            let operationsWithCategoryTitle = allOperations.filter( operation => operation.category?.toLowerCase().trim() === categoryTitle.toLowerCase().trim());
         // console.log(operationsWithCategoryTitle);
         const result = await HttpUtils.request(categoryRoute + id, 'DELETE', true);
         for ( let operation of operationsWithCategoryTitle) {

@@ -11,7 +11,7 @@
 
 body {
    font-family: 'Roboto-400', sans-serif;
-   overflow: scroll;
+   overflow: auto;
 
 }
 
@@ -128,6 +128,11 @@ max-width: 352px;
 
 }
 
+.new-card {
+   cursor: pointer;
+   height: 121px;
+   max-width: 352px;
+}
 .data-period {
    display: flex;
 }
