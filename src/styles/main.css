@@ -129,8 +129,7 @@ max-width: 352px;
 }
 
 .new-card {
-   cursor: pointer;
-   height: 121px;
+   cursor: pointer; 
    max-width: 352px;
 }
 .data-period {

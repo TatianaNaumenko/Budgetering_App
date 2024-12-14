@@ -4,45 +4,45 @@ import { CategoryDeleter } from "./delete-category";
 
 export class Category {
    constructor(openNewRoute, categoryType) {
-       this.openNewRoute = openNewRoute;
-       this.categoryType = categoryType;
-       this.getCategories().then();
+      this.openNewRoute = openNewRoute;
+      this.categoryType = categoryType;
+      this.getCategories().then();
    }
 
    async getCategories() {
-       const result = await HttpUtils.request(`/categories/${this.categoryType}`);
+      const result = await HttpUtils.request(`/categories/${this.categoryType}`);
 
-       if (result.redirect) {
-           return this.openNewRoute(result.redirect);
-       }
+      if (result.redirect) {
+         return this.openNewRoute(result.redirect);
+      }
 
-       if (result.error || !result.response || (result.response && result.response.error)) {
-           console.log(result.response.message || 'Возникла ошибка при запросе. Обратитесь в поддержку');
-           return;
-       }
+      if (result.error || !result.response || (result.response && result.response.error)) {
+         console.log(result.response.message || 'Возникла ошибка при запросе. Обратитесь в поддержку');
+         return;
+      }
 
-       this.getCategoryList(result.response);
+      this.getCategoryList(result.response);
    }
 
    getCategoryList(categories) {
-       let cardsElement = document.getElementById('cards');
+      let cardsElement = document.getElementById('cards');
 
-       if (cardsElement) {
-           cardsElement.innerHTML = "";
-           categories.forEach(category => {
-               let cardElement = this.createCategoryCard(category);
-               cardsElement.appendChild(cardElement);
-           });
-       }
+      if (cardsElement) {
+         cardsElement.innerHTML = "";
+         categories.forEach(category => {
+            let cardElement = this.createCategoryCard(category);
+            cardsElement.appendChild(cardElement);
+         });
+      }
 
-       this.addNewCardLink(cardsElement);
-       this.categoryDeleteEventListeners();
+      this.addNewCardLink(cardsElement);
+      this.categoryDeleteEventListeners();
    }
 
    createCategoryCard(category) {
-       let cardElement = document.createElement('div');
-       cardElement.className = 'col-md-4 mb-4';
-       cardElement.innerHTML = `
+      let cardElement = document.createElement('div');
+      cardElement.className = 'col-md-4 mb-4';
+      cardElement.innerHTML = `
            <div class="card h3 p-3 text-purple-dark">
                ${category.title}
                <div class="action pt-3">
@@ -52,42 +52,54 @@ export class Category {
                </div>
            </div>
        `;
-       return cardElement;
+      return cardElement;
    }
 
    addNewCardLink(cardsElement) {
-       const cardLinkElement = document.createElement('div');
-       cardLinkElement.className = 'new-card col-md-4 mb-4 card h3 p-3 d-flex justify-content-center align-items-center';
-       cardLinkElement.style.height = '121px';
-       cardLinkElement.innerHTML = `
-           <a href="/create-${this.categoryType}" class="text-center text-decoration-none">
+      const cardLinkElement = document.createElement('div');
+      cardLinkElement.className = 'col-md-4 mb-4';
+      cardLinkElement.innerHTML = `
+       <div class="card new-card  h3 p-3 text-purple-dark d-flex  justify-content-center align-items-center">
+
+                         <a href="/create-${this.categoryType}" class="text-center text-decoration-none">
                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
-               </svg>
-           </a>
-       `;
-       cardsElement.appendChild(cardLinkElement);
+                </svg>
+        </a>
+          
+       </div>
+   `;
+      //  cardLinkElement.className = 'new-card col-md-4 mb-4 card h3 p-3 d-flex justify-content-center align-items-center';
+      //  cardLinkElement.style.height = '121px';
+      //  cardLinkElement.innerHTML = `
+      //      <a href="/create-${this.categoryType}" class="text-center text-decoration-none">
+      //          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      //              <path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
+      //          </svg>
+      //      </a>
+      //  `;
+      cardsElement.appendChild(cardLinkElement);
 
-       cardsElement.addEventListener('click', (event) => {
-           if (event.target.closest('.new-card')) {
-               window.location.href = `/create-${this.categoryType}`;
-           }
-       });
+      cardLinkElement.addEventListener('click', (event) => {
+         if (event.target.closest('.new-card')) {
+            window.location.href = `/create-${this.categoryType}`;
+         }
+      });
    }
 
    categoryDeleteEventListeners() {
-       document.addEventListener('click', (event) => {
-           if (event.target.classList.contains('delete-card')) {
-               const categoryId = event.target.getAttribute('data-id');
-               const categoryTitle = event.target.getAttribute('data-title');
-               const deleteBtn = document.getElementById('delete-btn');
+      document.addEventListener('click', (event) => {
+         if (event.target.classList.contains('delete-card')) {
+            const categoryId = event.target.getAttribute('data-id');
+            const categoryTitle = event.target.getAttribute('data-title');
+            const deleteBtn = document.getElementById('delete-btn');
 
-               deleteBtn.addEventListener('click', (e) => {
-                   e.preventDefault();
-                   CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
-               });
-           }
-       });
+            deleteBtn.addEventListener('click', (e) => {
+               e.preventDefault();
+               CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
+            });
+         }
+      });
    }
 }
 
