@@ -1,6 +1,7 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
-import { Category } from "./js/common/category";
+import { CreateCategory } from "./js/common/create-category";
+import { Layout } from "./js/common/layout";
 import { CreateExpense } from "./js/expense/create-expense";
 import { EditExpense } from "./js/expense/edit-expense";
 
@@ -13,6 +14,8 @@ import { EditIncome } from "./js/income/edit-income";
 
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
+import { Sidebar } from "./js/utils/sidebar-utils";
+
 
 
 export class Router {
@@ -83,7 +86,7 @@ export class Router {
             template: '/templates/pages/expense/expenses.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Category(this.openNewRoute.bind(this), 'expense' )
+               new CreateCategory(this.openNewRoute.bind(this), 'expense')
             },
 
          },
@@ -121,7 +124,7 @@ export class Router {
             template: '/templates/pages/income/incomes.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Category(this.openNewRoute.bind(this),'income')
+               new CreateCategory(this.openNewRoute.bind(this), 'income')
             }
          },
          {
@@ -212,7 +215,8 @@ export class Router {
          if (newRoute.template) {
             this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
             if (newRoute.useLayout) {
-
+               // new Layout(newRoute);
+            
                this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text())
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');
@@ -220,7 +224,8 @@ export class Router {
                this.headerTitleElem = document.getElementById('header-title');
                this.headerTitleElem.innerText = newRoute.title;
                this.balanceElem = document.getElementById('balance-amount');
-          
+               new Sidebar();
+
                let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
                if (userInfo) {
                   userInfo = JSON.parse(userInfo)

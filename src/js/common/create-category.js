@@ -2,7 +2,7 @@
 import { HttpUtils } from "../utils/http-utils";
 import { CategoryDeleter } from "./delete-category";
 
-export class Category {
+export class CreateCategory {
    constructor(openNewRoute, categoryType) {
       this.openNewRoute = openNewRoute;
       this.categoryType = categoryType;
@@ -60,7 +60,6 @@ export class Category {
       cardLinkElement.className = 'col-md-4 mb-4';
       cardLinkElement.innerHTML = `
        <div class="card new-card  h3 p-3 text-purple-dark d-flex  justify-content-center align-items-center">
-
                          <a href="/create-${this.categoryType}" class="text-center text-decoration-none">
                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                    <path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
