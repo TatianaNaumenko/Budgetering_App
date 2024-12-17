@@ -1,8 +1,8 @@
 <section class="diagramma">
 
  
-   <ul class="days-navigation d-flex flex-wrap p-0 ms-4 mt-4 list-unstyled col-12">
-      <li class="ms-4 mt-2">
+   <ul class="days-navigation d-flex flex-wrap p-0  mt-4 list-unstyled col-12">
+      <li class=" mt-2">
          <a href="javascript:void(0)" class="select-interval btn btn-outline-secondary w-100 " data-period="today" id="today">
             Сегодня
          </a>
@@ -46,12 +46,14 @@
 
      </li>
    </ul>
-    <div class="row main-diagramm">
-        <div class="income-diagramma col-md-5" style="width: 400px;">
+    <div class=" main-charts ">
+        <div class="chart-container">
+         <div class="chart-name">Доходы</div>
             <canvas id="income-diagramma"></canvas>
         </div>
-
-        <div class="col-md-5  " style="width: 400px;">
+<div class="separator"></div>
+        <div class="chart-container">
+         <div class="chart-name">Расходы</div>
             <canvas id="expenses-diagramma"></canvas>
         </div>
     </div>

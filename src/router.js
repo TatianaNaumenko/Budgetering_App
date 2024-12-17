@@ -11,10 +11,10 @@ import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
 import { CreateIncome } from "./js/income/create-income";
 import { EditIncome } from "./js/income/edit-income";
-
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
 import { Sidebar } from "./js/utils/sidebar-utils";
+import { BalanceService } from "./js/sevice/balance-service";
 
 
 
@@ -26,6 +26,7 @@ export class Router {
       this.headerTitleElem = null;
       this.layoutPath = '/templates/layout.html';
       this.balanceElem = null;
+
       this.routes = [
          {
             route: '/',
@@ -108,17 +109,7 @@ export class Router {
                new EditExpense(this.openNewRoute.bind(this))
             }
          },
-         {
-            route: '/create-expense',
-            title: 'Создание расхода',
-            template: '/templates/expense/create-expenses-category.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new CreateExpense(this.openNewRoute.bind(this))
-            }
-         },
-
-         {
+             {
             route: '/incomes',
             title: ' Доходы',
             template: '/templates/pages/income/incomes.html',
@@ -137,6 +128,15 @@ export class Router {
             }
          },
          {
+            route: '/edit-income',
+            title: 'Редактирование дохода',
+            template: '/templates/pages/income/edit-incomes-categoty.html',
+            useLayout: this.layoutPath,
+            load: () => {
+               new EditIncome(this.openNewRoute.bind(this))
+            }
+         },
+         {
             route: '/create-expense-in-income-expense',
             title: 'Создание дохода/расхода',
             template: '/templates/pages/income-expense/create-income-expense.html',
@@ -145,6 +145,7 @@ export class Router {
                new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
             }
          },
+   
          {
             route: '/create-income-in-income-expense',
             title: 'Создание дохода/расхода',
@@ -154,15 +155,7 @@ export class Router {
                new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'income')
             }
          },
-         {
-            route: '/edit-income',
-            title: 'Редактирование дохода',
-            template: '/templates/pages/income/edit-incomes-categoty.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new EditIncome(this.openNewRoute.bind(this))
-            }
-         },
+      
 
       ]
       this.initEvents();
@@ -241,7 +234,7 @@ export class Router {
                   AuthUtils.removeAuthInfo();
                   location.href = '/login'
                })
-               this.getBalance().then()
+             this.setBalance().then()
                this.activateLink('.main-menu-item');
                let menuDropdownLink = document.getElementById('menu-dropdown-link');
                if (menuDropdownLink) {
@@ -274,21 +267,11 @@ export class Router {
 
 
 
-   async getBalance() {
-      const result = await HttpUtils.request('/balance')
-      if (result.redirect) {
-         return this.openNewRoute(result.redirect);
-      }
-      if (result.error || !result.response || (result.response && result.response.error)) {
-         return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
-      }
-
-      this.balanceElem.innerText = result.response.balance + '$';
-      // // создать функцию обновления баланса
-      // updatehBalance().then();
-
-   }
-
+   async setBalance() {
+      const balanceService = new BalanceService(); 
+      await balanceService.requestBalance(); // Запросите баланс
+      this.balanceElem.innerText = `${balanceService.balance}$`; 
+  }
 
    activateLink(elemClass) {
       let currentlocation = window.location.pathname;
@@ -332,4 +315,3 @@ export class Router {
 
 
 }
-

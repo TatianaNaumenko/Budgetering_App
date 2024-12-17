@@ -1,6 +1,15 @@
-
+@media screen and (max-width: 1135px){
+.btn {
+  margin-bottom: 10px;
+}
+}
 
 @media screen and (max-width: 1024px) {
+  body {
+   overflow-y: hidden;
+   overflow-x: hidden;
+   
+  }
 .sidebar {
     position: fixed;
      top: 0;
@@ -84,8 +93,14 @@ right: 3.5vw;
 .nav-open .menu-toggle-bar.menu-toggle-bar--bottom {
   transform: translateY(0) rotate(-45deg);
 }
+.separator {
+  display: none;
+}
+ .chart-container {
+  margin-right: auto;
+  margin-left: auto;
 
- 
+ }
 }
 @media screen and (max-width: 425px) {
   .action .btn {
