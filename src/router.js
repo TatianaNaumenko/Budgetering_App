@@ -1,14 +1,22 @@
 import { Form } from "./js/auth/form";
 import { MainChart } from "./js/chart/mainChart";
-import { DeleteExpense } from "./js/expense/delete-expense";
-import { Expense } from "./js/expense/expense";
+import { CreateCategory } from "./js/common/create-category";
+import { Layout } from "./js/common/layout";
+import { CreateExpense } from "./js/expense/create-expense";
+import { EditExpense } from "./js/expense/edit-expense";
+
+import { CreateExpenseInIncomeExpense, CreateIncomeExpenseInIncomeExpense } from "./js/income-expense/create-income-expense-in-income-expense";
 import { DeleteIncomeExpense } from "./js/income-expense/delete-income-expense";
 import { EditIncomeExpense } from "./js/income-expense/edit-income-expense";
 import { IncomeExpenses } from "./js/income-expense/income-expense";
-import { DeleteIncome } from "./js/income/delete-income";
-import { Income } from "./js/income/income";
+import { CreateIncome } from "./js/income/create-income";
+import { EditIncome } from "./js/income/edit-income";
 import { AuthUtils } from "./js/utils/auth-utils";
 import { HttpUtils } from "./js/utils/http-utils";
+import { Sidebar } from "./js/utils/sidebar-utils";
+import { BalanceService } from "./js/sevice/balance-service";
+
+
 
 export class Router {
    constructor() {
@@ -18,6 +26,7 @@ export class Router {
       this.headerTitleElem = null;
       this.layoutPath = '/templates/layout.html';
       this.balanceElem = null;
+
       this.routes = [
          {
             route: '/',
@@ -78,14 +87,14 @@ export class Router {
             template: '/templates/pages/expense/expenses.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Expense(this.openNewRoute.bind(this))
+               new CreateCategory(this.openNewRoute.bind(this), 'expense')
             },
 
          },
          {
             route: '/create-expense',
             title: 'Создание категории расходов',
-            template: '/templates/expense/create-expenses-category.html',
+            template: '/templates/pages/expense/create-expenses-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateExpense(this.openNewRoute.bind(this))
@@ -94,67 +103,59 @@ export class Router {
          {
             route: '/edit-expense',
             title: 'Редактирование расхода',
-            template: '/templates/expense/edit-expenses-category.html',
+            template: '/templates/pages/expense/edit-expenses-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new EditExpense(this.openNewRoute.bind(this))
             }
          },
-         {
-            route: '/create-expense',
-            title: 'Создание расхода',
-            template: '/templates/expense/create-expenses-category.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new CreateExpense(this.openNewRoute.bind(this))
-            }
-         },
-
-         {
+             {
             route: '/incomes',
             title: ' Доходы',
             template: '/templates/pages/income/incomes.html',
             useLayout: this.layoutPath,
             load: () => {
-               new Income(this.openNewRoute.bind(this))
+               new CreateCategory(this.openNewRoute.bind(this), 'income')
             }
          },
          {
             route: '/create-income',
             title: ' Создание категории доходов',
-            template: '/templates/income/create-incomes-category.html',
+            template: '/templates/pages/income/create-incomes-category.html',
             useLayout: this.layoutPath,
             load: () => {
                new CreateIncome(this.openNewRoute.bind(this))
             }
          },
          {
-            route: '/create-expense-in-income-expense',
-            title: 'Создание дохода/расхода',
-            template: '/templates/income-expense/create-income-expense.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new CreateExpenseInIncomeExpense(this.openNewRoute.bind(this))
-            }
-         },
-         {
-            route: '/create-income-in-income-expense',
-            title: 'Создание дохода/расхода',
-            template: '/templates/income-expense/create-income-expense.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new CreateIncomeInIncomeExpense(this.openNewRoute.bind(this))
-            }
-         },
-         {
             route: '/edit-income',
             title: 'Редактирование дохода',
-            template: '/templates/income/edit-incomes-category.html',
+            template: '/templates/pages/income/edit-incomes-categoty.html',
             useLayout: this.layoutPath,
             load: () => {
                new EditIncome(this.openNewRoute.bind(this))
             }
          },
+         {
+            route: '/create-expense-in-income-expense',
+            title: 'Создание дохода/расхода',
+            template: '/templates/pages/income-expense/create-income-expense.html',
+            useLayout: this.layoutPath,
+            load: () => {
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
+            }
+         },
+   
+         {
+            route: '/create-income-in-income-expense',
+            title: 'Создание дохода/расхода',
+            template: '/templates/pages/income-expense/create-income-expense.html',
+            useLayout: this.layoutPath,
+            load: () => {
+               new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'income')
+            }
+         },
+      
 
       ]
       this.initEvents();
@@ -207,7 +208,8 @@ export class Router {
          if (newRoute.template) {
             this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
             if (newRoute.useLayout) {
-
+               // new Layout(newRoute);
+            
                this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text())
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');
@@ -215,6 +217,7 @@ export class Router {
                this.headerTitleElem = document.getElementById('header-title');
                this.headerTitleElem.innerText = newRoute.title;
                this.balanceElem = document.getElementById('balance-amount');
+               new Sidebar();
 
                let userInfo = AuthUtils.getAuthInfo(AuthUtils.userInfoKey);
                if (userInfo) {
@@ -231,7 +234,7 @@ export class Router {
                   AuthUtils.removeAuthInfo();
                   location.href = '/login'
                })
-               this.getBalance().then()
+             this.setBalance().then()
                this.activateLink('.main-menu-item');
                let menuDropdownLink = document.getElementById('menu-dropdown-link');
                if (menuDropdownLink) {
@@ -239,10 +242,10 @@ export class Router {
                      e.preventDefault();
                      menuDropdownLink.classList.add('active');
                      this.activateLink('.menu-dropdown-item');
-                     
+
 
                   })
-          
+
                }
 
                this.contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
@@ -264,21 +267,11 @@ export class Router {
 
 
 
-   async getBalance() {
-      const result = await HttpUtils.request('/balance')
-      if (result.redirect) {
-         return this.openNewRoute(result.redirect);
-      }
-      if (result.error || !result.response || (result.response && result.response.error)) {
-         return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
-      }
-
-      this.balanceElem.innerText = result.response.balance + '$';
-      // // создать функцию обновления баланса
-      // updatehBalance().then();
-
-   }
-
+   async setBalance() {
+      const balanceService = new BalanceService(); 
+      await balanceService.requestBalance(); // Запросите баланс
+      this.balanceElem.innerText = `${balanceService.balance}$`; 
+  }
 
    activateLink(elemClass) {
       let currentlocation = window.location.pathname;
@@ -291,7 +284,7 @@ export class Router {
          } else {
             link.classList.remove('active');
          }
-         
+
       })
    }
 
@@ -306,9 +299,11 @@ export class Router {
    //       }
    //    })
    // }
-
+   // я не знаю где и зачем применить эту функцию
    //   async updateBalance(){
-   //    const result = await HttpUtils.request('/balance', 'PUT')
+   //    const result = await HttpUtils.request('/balance', 'PUT', true, {
+   //       newBalance: 1000
+   //    })
    //    if (result.redirect) {
    //        return this.openNewRoute(result.redirect);
    //    }
@@ -320,4 +315,3 @@ export class Router {
 
 
 }
-
