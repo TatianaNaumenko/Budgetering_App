@@ -106,6 +106,7 @@ export class Form {
 
       try {
          if (this.page === 'sign-up') {
+        
             await this.handleSignUp();
          } else if (this.page === 'login') {
             await this.handleLogin();

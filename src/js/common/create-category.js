@@ -68,15 +68,7 @@ export class CreateCategory {
           
        </div>
    `;
-      //  cardLinkElement.className = 'new-card col-md-4 mb-4 card h3 p-3 d-flex justify-content-center align-items-center';
-      //  cardLinkElement.style.height = '121px';
-      //  cardLinkElement.innerHTML = `
-      //      <a href="/create-${this.categoryType}" class="text-center text-decoration-none">
-      //          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-      //              <path d="M14.5469 6.08984V9.05664H0.902344V6.08984H14.5469ZM9.32422 0.511719V15.0039H6.13867V0.511719H9.32422Z" fill="#CED4DA"/>
-      //          </svg>
-      //      </a>
-      //  `;
+
       cardsElement.appendChild(cardLinkElement);
 
       cardLinkElement.addEventListener('click', (event) => {
@@ -86,19 +78,42 @@ export class CreateCategory {
       });
    }
 
-   categoryDeleteEventListeners() {
-      document.addEventListener('click', (event) => {
-         if (event.target.classList.contains('delete-card')) {
-            const categoryId = event.target.getAttribute('data-id');
-            const categoryTitle = event.target.getAttribute('data-title');
-            const deleteBtn = document.getElementById('delete-btn');
+   // categoryDeleteEventListeners() {
+   //          document.addEventListener('click', (event) => {
+   //       if (event.target.classList.contains('delete-card')) {
+   //          const categoryId = event.target.getAttribute('data-id');
+   //          const categoryTitle = event.target.getAttribute('data-title');
+   //          const deleteBtn = document.getElementById('delete-btn');
 
-            deleteBtn.addEventListener('click', (e) => {
-               e.preventDefault();
-               CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
-            });
-         }
+   //          deleteBtn.addEventListener('click', (e) => {
+   //             e.preventDefault();
+   //             CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
+   //          });
+   //       }
+   //    });
+   // }
+   categoryDeleteEventListeners() {
+      const deleteBtn = document.getElementById('delete-btn');
+  
+      // Обработчик для кнопки удаления
+      deleteBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const categoryId = deleteBtn.getAttribute('data-id');
+          const categoryTitle = deleteBtn.getAttribute('data-title');
+          CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
       });
-   }
+  
+      // Обработчик для клика на карточку удаления
+      document.addEventListener('click', (event) => {
+          if (event.target.classList.contains('delete-card')) {
+              const categoryId = event.target.getAttribute('data-id');
+              const categoryTitle = event.target.getAttribute('data-title');
+  
+              // Устанавливаем данные для кнопки удаления
+              deleteBtn.setAttribute('data-id', categoryId);
+              deleteBtn.setAttribute('data-title', categoryTitle);
+          }
+      });
+  }
 }
 

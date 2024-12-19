@@ -93,14 +93,19 @@ right: 3.5vw;
 .nav-open .menu-toggle-bar.menu-toggle-bar--bottom {
   transform: translateY(0) rotate(-45deg);
 }
+
+.header {
+  padding-left: 0;
+  text-align: center;
+}
+.days-navigation{
+  margin-left: 0;
+  justify-content: center;
+}
 .separator {
   display: none;
 }
- .chart-container {
-  margin-right: auto;
-  margin-left: auto;
 
- }
 }
 @media screen and (max-width: 425px) {
   .action .btn {

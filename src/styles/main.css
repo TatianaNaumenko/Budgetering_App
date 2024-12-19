@@ -9,7 +9,9 @@
    src: url(../fonts/Roboto-Medium.ttf) format('truetype');
 }
 
-
+/* * {
+  
+} */
 
 
 body {
@@ -175,6 +177,8 @@ margin-top: 20px;
    margin-top: 116px;
    display: flex;
    flex-wrap: wrap;
+   justify-content: center;
+   gap: 84px;
 }
 .separator {
    width: 2px;
@@ -183,14 +187,8 @@ margin-top: 20px;
    margin-top: 90px;
 }
 
-.chart-container {
-   max-width: 437px;
-   max-height: 467px;
-  margin-left: 84px;
-  margin-right: 84px;
-}
 .chart-container canvas {
-   width: 360px;
+   max-width:  360px;
    height: 360px;
 }
 .chart-name {
