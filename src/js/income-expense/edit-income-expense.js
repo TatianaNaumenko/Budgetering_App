@@ -1,167 +1,182 @@
 import { HttpUtils } from "../utils/http-utils";
 
 export class EditIncomeExpense {
-   constructor(openNewRoute) {
-       this.openNewRoute = openNewRoute;
-       const urlParams = new URLSearchParams(window.location.search)
-       const id = urlParams.get('id')
-       if (!id) {
-           return this.openNewRoute('/')
-       }
+    constructor(openNewRoute) {
+        this.openNewRoute = openNewRoute;
+        const urlParams = new URLSearchParams(window.location.search)
+        const id = urlParams.get('id')
+        if (!id) {
+            return this.openNewRoute('/')
+        }
+        this.init(id).then();
+        this.typeSelectElement = document.getElementById('type-select');
+        this.categorySelectElement = document.getElementById('category');
+        this.sumElement = document.getElementById('sum');
+        this.dateElement = document.getElementById('date');
+        this.commentElement = document.getElementById('comment');
+        this.operationOriginalData = null;
+        this.typeOperation = null;
 
-       this.typeSelectElement = document.getElementById('type-select');
-       this.categorySelectElement = document.getElementById('category');
-       this.sumElement = document.getElementById('sum');
-       this.dateElement = document.getElementById('date');
-       this.commentElement = document.getElementById('comment');
-       this.idElement = document.getElementById('id');
-      //  странно что без этого блока не работает код
-       if (!this.typeSelectElement || !this.categorySelectElement || !this.sumElement || !this.dateElement || !this.commentElement || !this.idElement) {
-         console.error('Один или несколько элементов не были найдены.');
-         return; // Прекратить выполнение конструктора, если элементы не найдены
-      }
+        document.getElementById('update-button').addEventListener('click', this.updateIncomeExpense.bind(this))
 
-       this.typeSelectElement.addEventListener('change', () => { //если юзер поменял тип в селекте, то меняем наполнение для категорий
-           this.showCategories(this.incomeOperation, this.expenseOperation); 
-       });
+    }
 
-
-       document.getElementById('update-button').addEventListener('click', this.updateIncomeExpense.bind(this))
-       this.getOperation(id).then()
-   }
-
-   async getIncomeCategories() {
-       const result = await HttpUtils.request('/categories/income');
-       this.incomeOperation = result.response;
-   }
-
-   async getExpenseCategories() {
-       const result = await HttpUtils.request('/categories/expense');
-       this.expenseOperation = result.response;
-   }
+    async init(id) {
+        const operationData = await this.getOperation(id).then();
+        console.log(operationData);
+        if (operationData) {
+            this.showOption(operationData);
+        }
 
 
-   showCategories(incomeOperation, expenseOperation) {
-       this.categorySelectElement.innerHTML = '';
+    }
+    //получит обект с опциями операции по id
+    async getOperation(id) {
+        try {
+            const result = await HttpUtils.request(`/operations/${id}`);
 
-       if (this.typeSelectElement.value === 'income') {
-           for (let i = 0; i < incomeOperation.length; i++) {
-               const optionElement = document.createElement('option');
-               optionElement.setAttribute("value", incomeOperation[i].id);
-               optionElement.innerText = incomeOperation[i].title;
-               this.categorySelectElement.appendChild(optionElement);
-           }
+            if (result.error || !result.response) {
+                throw new Error('Не удалось загрузить операцию. Попробуйте еще раз.');
+            }
 
-       } else if (this.typeSelectElement.value === 'expense') {
-           for (let i = 0; i < expenseOperation.length; i++) {
-               const optionElement = document.createElement('option');
-               optionElement.setAttribute("value", expenseOperation[i].id);
-               optionElement.innerText = expenseOperation[i].title;
-               this.categorySelectElement.appendChild(optionElement);
-           }
-       }
-   }
+            this.operationOriginalData = result.response;
+            return result.response;
 
+        } catch (error) {
+            console.error('Ошибка при получении операции:', error);
+            return alert(error.message || 'Произошла ошибка при загрузке операции. Обратитесь в поддержку.');
+        }
+    }
 
-   async getOperation(id) {
-       const result = await HttpUtils.request('/operations/' + id)
-       if (result.redirect) {
-           return this.openNewRoute(result.redirect)
-       }
+    showOption(operation) {
+        const optionElement = document.createElement('option');
+        optionElement.setAttribute('value', operation.type);
+        optionElement.selected = true;
+        optionElement.innerText = operation.type === 'income' ? 'Доход' : 'Расход';
+        this.typeSelectElement.appendChild(optionElement);
+        this.typeSelectElement.disabled = true
+        this.showCategories(operation.type, operation.category).then();
+        this.sumElement.value = operation.amount
+        this.dateElement.value = operation.date
+        this.commentElement.value = operation.comment
+        if (this.categorySelectElement) {
+            for (let i = 0; i < this.categorySelectElement.options.length; i++) {
+                if (this.categorySelectElement.options[i].value === operation.category) {
+                    this.categorySelectElement.selectedIndex = i
+                }
 
-       if (result.error || !result.response || (result.response && result.response.error)) {
-           return alert('Возникла ошибка при запросе операции. Обратитесь в поддержку')
-       }
-
-       this.operationOriginalData = result.response
-       for (let i = 0; i < this.typeSelectElement.options.length; i++) {
-           if (this.typeSelectElement.options[i].value === result.response.type) {
-               this.typeSelectElement.selectedIndex = i;
-           }
-       }
-
-       await this.getIncomeCategories();
-       await this.getExpenseCategories();
-       this.showOperation(result.response)
-       this.showCategories(this.incomeOperation, this.expenseOperation);
-   }
-
-   showOperation(operation) {
-       this.sumElement.value = operation.amount
-       this.categorySelectElement.value = operation.category
-       this.dateElement.value = operation.date
-       this.commentElement.value = operation.comment
-       if (this.typeSelectElement) {
-           for (let i = 0; i < this.typeSelectElement.options.length; i++) {
-               if (this.typeSelectElement.options[i].value === operation.type) {
-                   this.typeSelectElement.selectedIndex = i
-               }
-           }
-       }
-   }
-
-   validateForm() {
-       let isValid = true;
-       let textInputArray = [
-           this.typeSelectElement,
-           this.categorySelectElement,
-           this.sumElement,
-           this.dateElement,
-           this.commentElement
-       ]
-       for (let i = 0; i < textInputArray.length; i++) {
-
-           if (textInputArray[i].value) {
-               textInputArray[i].classList.remove('is-invalid');
-           } else {
-               textInputArray[i].classList.add('is-invalid');
-               isValid = false
-           }
-       }
-
-       return isValid;
-   }
+            }
+        }
+    }
 
 
-   async updateIncomeExpense(e, id) {
-       e.preventDefault()
-       if (this.validateForm()) {
-           const changedData = {}
-           if (this.sumElement.value !== this.operationOriginalData.amount) {
-               changedData.amount = this.sumElement.value
-           }
-           if (this.typeSelectElement.value !== this.operationOriginalData.type) {
-               changedData.type = this.sumElement.value
-           }
-           if (this.categorySelectElement.value !== this.operationOriginalData.category) {
-               changedData.category = this.categorySelectElement.value
-           }
-           if (this.dateElement.value !== this.operationOriginalData.date) {
-               changedData.date = this.dateElement.value
-           }
-           if (this.commentElement.value !== this.operationOriginalData.comment) {
-               changedData.comment = this.commentElement.value
-           }
+    async showCategories(type, selectedCategory) {
+        try {
+            const categories = await this.getCategories(type);
 
-           if (Object.keys(changedData).length > 0) {
+            // Очищаем предыдущие опции
+            this.categorySelectElement.innerHTML = '';
 
-               const result = await HttpUtils.request('/operations/' + this.operationOriginalData.id, 'PUT', true, {
-                   type: this.typeSelectElement.value,
-                   amount: this.sumElement.value,
-                   date: this.dateElement.value,
-                   comment: this.commentElement.value,
-                   category_id: Number(this.categorySelectElement.value)
-               }, changedData)
+            // Добавляем новые опции
+            categories.forEach(category => {
+                const optionElement = document.createElement('option');
+                optionElement.setAttribute("value", category.id);
+                optionElement.innerText = category.title;
+                this.categorySelectElement.appendChild(optionElement);
 
-               if (result.redirect) {
-                   return this.openNewRoute(result.redirect)
-               }
+                // Устанавливаем выбранную категорию
+                if (category.title === selectedCategory) {
+                    optionElement.selected = true; // Устанавливаем флаг selected
+                }
+            });
+        } catch (error) {
+            console.error('Ошибка при получении категорий:', error);
+            alert('Не удалось загрузить категории. Попробуйте еще раз.');
+        }
+    }
+    //этот код вынести в отдельный файл можно 
+    async getCategories(type) {
+        try {
+            const result = await HttpUtils.request(`/categories/${type}`);
 
-               if (result.error || !result.response || (result.response && result.response.error)) {
-                   return console.log('Возникла ошибка при Редактирование. Обратитесь в поддержку')
-               }
-               return this.openNewRoute('/incomes-expenses')
-           }
-       }
-   }
+            // Проверка на ошибки в результате
+            if (result.error || !result.response) {
+                throw new Error('Не удалось загрузить категории. Попробуйте еще раз.');
+            }
+
+            return result.response;
+
+        } catch (error) {
+            console.error('Ошибка при получении категорий:', error);
+            alert(error.message || 'Произошла ошибка при загрузке категорий. Обратитесь в поддержку.');
+        }
+    }
+
+
+    validateForm() {
+        let isValid = true;
+        let textInputArray = [
+            this.typeSelectElement,
+            this.categorySelectElement,
+            this.sumElement,
+            this.dateElement,
+            this.commentElement
+        ]
+        for (let i = 0; i < textInputArray.length; i++) {
+
+            if (textInputArray[i].value) {
+                textInputArray[i].classList.remove('is-invalid');
+            } else {
+                textInputArray[i].classList.add('is-invalid');
+                isValid = false
+            }
+        }
+
+        return isValid;
+    }
+
+
+    async updateIncomeExpense(e) {
+        e.preventDefault()
+        if (this.validateForm()) {
+            const changedData = {}
+            if (this.sumElement.value !== this.operationOriginalData.amount) {
+                changedData.amount = this.sumElement.value
+            }
+            if (this.typeSelectElement.value !== this.operationOriginalData.type) {
+                changedData.type = this.sumElement.value
+            }
+            if (this.categorySelectElement.value !== this.operationOriginalData.category) {
+                changedData.category = this.categorySelectElement.value
+            }
+            if (this.dateElement.value !== this.operationOriginalData.date) {
+                changedData.date = this.dateElement.value
+            }
+            if (this.commentElement.value !== this.operationOriginalData.comment) {
+                changedData.comment = this.commentElement.value
+            }
+
+            if (Object.keys(changedData).length > 0) {
+
+                const result = await HttpUtils.request('/operations/' + this.operationOriginalData.id, 'PUT', true, {
+                    type: this.typeSelectElement.value,
+                    amount: this.sumElement.value,
+                    date: this.dateElement.value,
+                    comment: this.commentElement.value,
+                    category_id: Number(this.categorySelectElement.value)
+                }, changedData)
+
+                if (result.redirect) {
+                    return this.openNewRoute(result.redirect)
+                }
+
+                if (result.error || !result.response || (result.response && result.response.error)) {
+                    return console.log('Возникла ошибка при Редактирование. Обратитесь в поддержку')
+                }
+                return this.openNewRoute('/incomes-expenses')
+            }
+        }
+    }
 }
+
+
