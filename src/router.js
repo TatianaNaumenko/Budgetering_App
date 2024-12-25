@@ -109,7 +109,7 @@ export class Router {
                new EditExpense(this.openNewRoute.bind(this))
             }
          },
-             {
+         {
             route: '/incomes',
             title: ' Доходы',
             template: '/templates/pages/income/incomes.html',
@@ -145,7 +145,7 @@ export class Router {
                new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'expense')
             }
          },
-   
+
          {
             route: '/create-income-in-income-expense',
             title: 'Создание дохода/расхода',
@@ -155,7 +155,7 @@ export class Router {
                new CreateIncomeExpenseInIncomeExpense(this.openNewRoute.bind(this), 'income')
             }
          },
-      
+
 
       ]
       this.initEvents();
@@ -167,8 +167,10 @@ export class Router {
    }
 
    async openNewRoute(url) {
+
       const currentRoute = window.location.pathname;
       history.pushState({}, '', url);
+
       await this.activateRoute(null, currentRoute)
    }
 
@@ -199,6 +201,27 @@ export class Router {
       const urlRoute = window.location.pathname;
       const newRoute = this.routes.find(item => item.route === urlRoute); // это обект с данными маршрута
 
+      // // Проверка наличия токенов
+      const accessToken = AuthUtils.getAuthInfo(AuthUtils.accessTokenKey);
+      const refreshToken = AuthUtils.getAuthInfo(AuthUtils.refreshTokenKey);
+
+      // Если токены отсутствуют и маршрут не /login и не /sign-up, перенаправляем на страницу входа
+      if (!accessToken && !refreshToken && urlRoute !== '/login' && urlRoute !== '/sign-up') {
+         location.href = '/login';
+         return;
+
+
+      }
+
+      //    if (!accessToken && !refreshToken) {
+      //       // Проверка, если текущий маршрут - это не страница входа
+      //       if (urlRoute !== '/login' && urlRoute !== '/sign-up') {
+      //          //  history.pushState({}, '', '/login'); // Используйте history для изменения маршрута
+      //          location.href = '/login';
+      //           return; // Прерываем выполнение, чтобы избежать дальнейшей обработки
+      //       }
+      //   }
+
       if (newRoute) {
          if (newRoute.title) {
             this.titlePageElement.innerText = newRoute.title + ' |  Lumincoin Finance'
@@ -206,10 +229,11 @@ export class Router {
 
 
          if (newRoute.template) {
-            this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+
+
             if (newRoute.useLayout) {
-               // new Layout(newRoute);
-            
+
+
                this.contentElement.innerHTML = await fetch(newRoute.useLayout).then(response => response.text())
                this.contentLayoutElement = document.getElementById('content-layout');
                this.userNameElement = document.getElementById('userName');
@@ -226,7 +250,8 @@ export class Router {
                      this.userNameElement.innerText = userInfo.name + ' ' + userInfo.lastName
                   }
                } else {
-                  location.href = '/login'
+                  location.href = '/login';
+                  return
                }
                // обработадла выход из приложения
                this.logOutElement.addEventListener('click', (e) => {
@@ -234,7 +259,7 @@ export class Router {
                   AuthUtils.removeAuthInfo();
                   location.href = '/login'
                })
-             this.setBalance().then()
+               this.setBalance().then()
                this.activateLink('.main-menu-item');
                let menuDropdownLink = document.getElementById('menu-dropdown-link');
                if (menuDropdownLink) {
@@ -250,28 +275,39 @@ export class Router {
 
                this.contentLayoutElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
 
+
+            } else {
+               // Если useLayout false, загружаем только шаблон
+               this.contentElement.innerHTML = await fetch(newRoute.template).then(response => response.text());
+
+
             }
 
          }
 
          if (newRoute.load && typeof newRoute.load === 'function') {
-            newRoute.load()
+            newRoute.load();
+
          }
 
-      } else {
+      }
+      else {
          console.log("route not found")
-         history.pushState({}, '', '/');
+         history.pushState({}, '', '/login');
+
          await this.activateRoute();
       }
+
+
    }
 
 
 
    async setBalance() {
-      const balanceService = new BalanceService(); 
+      const balanceService = new BalanceService(this.openNewRoute.bind(this));
       await balanceService.requestBalance(); // Запросите баланс
-      this.balanceElem.innerText = `${balanceService.balance}$`; 
-  }
+      this.balanceElem.innerText = `${balanceService.balance}$`;
+   }
 
    activateLink(elemClass) {
       let currentlocation = window.location.pathname;
@@ -287,31 +323,6 @@ export class Router {
 
       })
    }
-
-
-   // activateMenuItem(route) {
-   //    document.querySelectorAll('#sidebar .menu .nav-link').forEach(item => {
-   //       item.classList.remove('active');
-   //       if ((route.route.includes(href) && href !== '/') || (route.route === '/' && href === '/')) {
-   //          item.classList.add('active');
-   //       } else {
-   //          item.classList.remove('active');
-   //       }
-   //    })
-   // }
-   // я не знаю где и зачем применить эту функцию
-   //   async updateBalance(){
-   //    const result = await HttpUtils.request('/balance', 'PUT', true, {
-   //       newBalance: 1000
-   //    })
-   //    if (result.redirect) {
-   //        return this.openNewRoute(result.redirect);
-   //    }
-   //    if (result.error || !result.response || (result.response && result.response.error)) {
-   //        return console.log('Возникла ошибка при запросе Баланса. Обратитесь в поддержку ')
-   //    }
-   //    this.balanceElem.innerText = result.response.balance + '$';
-   //   }
 
 
 }

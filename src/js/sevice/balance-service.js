@@ -1,7 +1,8 @@
 import { HttpUtils } from "../utils/http-utils";
 
 export class BalanceService{
-   constructor(){
+   constructor(openNewRoute){
+      this.openNewRoute = openNewRoute;
       if(BalanceService.instance) {
          return BalanceService.instance
       }
