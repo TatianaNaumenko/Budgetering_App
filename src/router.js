@@ -28,15 +28,7 @@ export class Router {
       this.balanceElem = null;
 
       this.routes = [
-         {
-            route: '/',
-            title: 'Главная',
-            template: '/templates/pages/mainChart.html',
-            useLayout: this.layoutPath,
-            load: () => {
-               new MainChart(this.openNewRoute.bind(this));
-            }
-         },
+   
 
          {
             route: '/login',
@@ -54,6 +46,15 @@ export class Router {
             useLayout: false,
             load: () => {
                new Form(this.openNewRoute.bind(this), 'sign-up');
+            }
+         },
+         {
+            route: '/',
+            title: 'Главная',
+            template: '/templates/pages/mainChart.html',
+            useLayout: this.layoutPath,
+            load: () => {
+               new MainChart(this.openNewRoute.bind(this));
             }
          },
 
@@ -212,16 +213,6 @@ export class Router {
 
 
       }
-
-      //    if (!accessToken && !refreshToken) {
-      //       // Проверка, если текущий маршрут - это не страница входа
-      //       if (urlRoute !== '/login' && urlRoute !== '/sign-up') {
-      //          //  history.pushState({}, '', '/login'); // Используйте history для изменения маршрута
-      //          location.href = '/login';
-      //           return; // Прерываем выполнение, чтобы избежать дальнейшей обработки
-      //       }
-      //   }
-
       if (newRoute) {
          if (newRoute.title) {
             this.titlePageElement.innerText = newRoute.title + ' |  Lumincoin Finance'
@@ -250,8 +241,8 @@ export class Router {
                      this.userNameElement.innerText = userInfo.name + ' ' + userInfo.lastName
                   }
                } else {
-                  location.href = '/login';
-                  return
+                  // location.href = '/login';
+                  // return
                }
                // обработадла выход из приложения
                this.logOutElement.addEventListener('click', (e) => {

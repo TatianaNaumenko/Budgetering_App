@@ -78,42 +78,28 @@ export class CreateCategory {
       });
    }
 
-   // categoryDeleteEventListeners() {
-   //          document.addEventListener('click', (event) => {
-   //       if (event.target.classList.contains('delete-card')) {
-   //          const categoryId = event.target.getAttribute('data-id');
-   //          const categoryTitle = event.target.getAttribute('data-title');
-   //          const deleteBtn = document.getElementById('delete-btn');
-
-   //          deleteBtn.addEventListener('click', (e) => {
-   //             e.preventDefault();
-   //             CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
-   //          });
-   //       }
-   //    });
-   // }
    categoryDeleteEventListeners() {
       const deleteBtn = document.getElementById('delete-btn');
-  
+
       // Обработчик для кнопки удаления
       deleteBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const categoryId = deleteBtn.getAttribute('data-id');
-          const categoryTitle = deleteBtn.getAttribute('data-title');
-          CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
+         e.preventDefault();
+         const categoryId = deleteBtn.getAttribute('data-id');
+         const categoryTitle = deleteBtn.getAttribute('data-title');
+         CategoryDeleter.deleteCategory(this.categoryType, categoryId, categoryTitle, this.openNewRoute);
       });
-  
+
       // Обработчик для клика на карточку удаления
       document.addEventListener('click', (event) => {
-          if (event.target.classList.contains('delete-card')) {
-              const categoryId = event.target.getAttribute('data-id');
-              const categoryTitle = event.target.getAttribute('data-title');
-  
-              // Устанавливаем данные для кнопки удаления
-              deleteBtn.setAttribute('data-id', categoryId);
-              deleteBtn.setAttribute('data-title', categoryTitle);
-          }
+         if (event.target.classList.contains('delete-card')) {
+            const categoryId = event.target.getAttribute('data-id');
+            const categoryTitle = event.target.getAttribute('data-title');
+
+            // Устанавливаем данные для кнопки удаления
+            deleteBtn.setAttribute('data-id', categoryId);
+            deleteBtn.setAttribute('data-title', categoryTitle);
+         }
       });
-  }
+   }
 }
 
