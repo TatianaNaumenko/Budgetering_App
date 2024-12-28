@@ -2,46 +2,48 @@ import { DateFilter } from "../config/data-filter";
 import { HttpUtils } from "../utils/http-utils";
 
 export class IncomeExpenses {
-   constructor(openNewRoute) {
-      this.openNewRoute = openNewRoute;
-      new DateFilter(this.getOperations.bind(this)); //создаем экземпляр класса с фильтром и передаем ему метод для запроса с фильтром
-      this.getOperations('all').then();
+  constructor(openNewRoute) {
+    this.openNewRoute = openNewRoute;
+    new DateFilter(this.getOperations.bind(this)); //создаем экземпляр класса с фильтром и передаем ему метод для запроса с фильтром
+    this.getOperations('all').then();
   }
 
 
   async getOperations(period, dateFrom = '', dateTo = '') { //запрос на сервер для получения операций с фильтром
-      let url = '/operations?period=interval&dateFrom=' + dateFrom + '&dateTo=' + dateTo; //данные подставляются из фильтра
-      if (period === 'all') {
-          url = '/operations?period=all';
-      }
-      const result = await HttpUtils.request(url);
-      if (result.redirect) {
-          return this.openNewRoute(result.redirect);
-      }
+    let url = '/operations?period=interval&dateFrom=' + dateFrom + '&dateTo=' + dateTo; //данные подставляются из фильтра
+    if (period === 'all') {
+      url = '/operations?period=all';
+    }
+    const result = await HttpUtils.request(url);
+    // console.log(result.response)
+    if (result.redirect) {
+      return this.openNewRoute(result.redirect);
+    }
 
-      if (result.error || !result.response || (result.response && result.response.error)) {
-          return alert('Возникла ошибка при запросе операций');
-      }
-      this.showIncomeAndExpensesList(result.response);
+    if (result.error || !result.response || (result.response && result.response.error)) {
+      return alert('Возникла ошибка при запросе операций');
+    }
+    this.showIncomeAndExpensesList(result.response);
   }
 
 
   showIncomeAndExpensesList(operations) { //рисуем таблицу с операциями
-      let recordsElement = document.getElementById('table-record');
-      recordsElement.innerHTML = ''; // Очищаем таблицу перед отображением новых данных
-      for (let i = 0; i < operations.length; i++) {
-          const trElement = document.createElement('tr');
-          trElement.insertCell().innerText = i + 1;
-          trElement.classList.add('trelement')
-          trElement.insertCell().innerText = operations[i].type === 'expense' ? 'Расход' : 'Доход';
-          trElement.cells[1].className = operations[i].type === 'expense' ? 'text-danger' : 'text-success';
-          trElement.insertCell().innerText = operations[i].category;
-          trElement.insertCell().innerText = operations[i].amount + '$';
-          const date = new Date(operations[i].date);
-          trElement.insertCell().innerText = date.toLocaleDateString('ru-Ru');
-          trElement.insertCell().innerText = operations[i].comment;
+    let recordsElement = document.getElementById('table-record');
+    recordsElement.innerHTML = ''; // Очищаем таблицу перед отображением новых данных
+    for (let i = 0; i < operations.length; i++) {
+   
+      const trElement = document.createElement('tr');
+      trElement.insertCell().innerText = i + 1;
+      trElement.classList.add('trelement')
+      trElement.insertCell().innerText = operations[i].type === 'expense' ? 'Расход' : 'Доход';
+      trElement.cells[1].className = operations[i].type === 'expense' ? 'text-danger' : 'text-success';
+      trElement.insertCell().innerText = operations[i].category;
+      trElement.insertCell().innerText = operations[i].amount + '$';
+      const date = new Date(operations[i].date);
+      trElement.insertCell().innerText = date.toLocaleDateString('ru-Ru');
+      trElement.insertCell().innerText = operations[i].comment;
 
-          trElement.insertCell().innerHTML = `<div class="order-tools">
+      trElement.insertCell().innerHTML = `<div class="order-tools">
           <a href="javascript:void(0)" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-id=${operations[i].id} class="delete-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none" class="trash-icon">
               <path d="M4.5 5.5C4.77614 5.5 5 5.72386 5 6V12C5 12.2761 4.77614 12.5 4.5 12.5C4.22386 12.5 4 12.2761 4 12V6C4 5.72386 4.22386 5.5 4.5 5.5Z" fill="black"/>
@@ -57,20 +59,20 @@ export class IncomeExpenses {
           </a>
         </div>`;
 
-          recordsElement.appendChild(trElement);
-      }
+      recordsElement.appendChild(trElement);
+    }
 
-     this.operationDeleteEventListeners()
+    this.operationDeleteEventListeners()
   }
 
-      operationDeleteEventListeners() { //передаем id операции в каждую кнопку удаления
-          const deleteButtons = document.querySelectorAll('.delete-btn');
-          for (let i = 0; i < deleteButtons.length; i++) {
-              deleteButtons[i].addEventListener('click', (event) => {
-                  let operationId = event.target.closest('.delete-btn').getAttribute('data-id');
-                  let deleteBtn = document.getElementById('delete-btn');
-                  deleteBtn.setAttribute('href', '/delete-income-expense?id=' + operationId);
-              });
-          }
-      }
+  operationDeleteEventListeners() { //передаем id операции в каждую кнопку удаления
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    for (let i = 0; i < deleteButtons.length; i++) {
+      deleteButtons[i].addEventListener('click', (event) => {
+        let operationId = event.target.closest('.delete-btn').getAttribute('data-id');
+        let deleteBtn = document.getElementById('delete-btn');
+        deleteBtn.setAttribute('href', '/delete-income-expense?id=' + operationId);
+      });
+    }
+  }
 }
